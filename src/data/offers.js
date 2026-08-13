@@ -228,6 +228,10 @@ export function filterOffers(offers, filters = {}) {
   if (matched.length >= MIN_RESULTS) return matched
 
   const matchedIds = new Set(matched.map((offer) => offer.id))
-  const padding = offers.filter((offer) => !matchedIds.has(offer.id)).slice(0, MIN_RESULTS - matched.length)
+  const padding = offers
+    .filter((offer) => !matchedIds.has(offer.id))
+    .slice(0, MIN_RESULTS - matched.length)
+    .map((offer) => (filters.localisation ? { ...offer, location: filters.localisation } : offer))
+
   return [...matched, ...padding]
 }

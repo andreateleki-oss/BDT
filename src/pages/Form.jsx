@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useLocation, Link } from "react-router-dom"
 import { PlusSquare, Envelope, Lock, Check, X, CheckCircle, ArrowLeft } from "@phosphor-icons/react"
 import Header from "../components/Header"
@@ -78,6 +78,10 @@ function Form() {
     e.preventDefault()
     setSubmitted(true)
   }
+
+  useEffect(() => {
+    if (submitted) window.scrollTo(0, 0)
+  }, [submitted])
 
   return (
     <main className="font-body">

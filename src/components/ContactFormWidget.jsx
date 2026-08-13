@@ -28,6 +28,7 @@ function RequestTypeChip({ label, active, onClick }) {
 function ContactFormWidget({
   showSiteList = false,
   showContactForm = false,
+  siteName = "Nom du site",
   ctaLabel = "Continuer",
   ctaIcon: CtaIcon = CaretRight,
   onSubmit,
@@ -35,7 +36,7 @@ function ContactFormWidget({
   const { pathname } = useLocation()
   const [selected, setSelected] = useState(null)
   const [sites, setSites] = useState(
-    showSiteList ? [{ name: "Nom du site", tag: "Cette annonce" }] : []
+    showSiteList ? [{ name: siteName, tag: "Cette annonce" }] : []
   )
   const [addingSite, setAddingSite] = useState(false)
   const [siteUrl, setSiteUrl] = useState("")
