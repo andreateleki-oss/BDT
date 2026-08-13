@@ -1,4 +1,4 @@
-import frichePhoto from "../assets/images/property-card.png"
+import frichePhoto from "../assets/images/brick-facade.jpg"
 import complexePhoto from "../assets/images/studies-photo.png"
 import entrepotPhoto from "../assets/images/implanted-photo.png"
 import zonePhoto from "../assets/images/sector-journey-photo.png"

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { FilePdf, Heart, CompassTool } from "@phosphor-icons/react"
 import Button from "./ui/Button"
-import heroImage from "../assets/images/property-card.png"
+import heroImage from "../assets/images/factory-chimney.jpg"
 
 const SUMMARY = [
   { label: "Localisation", value: "Parc de Choyau Jaulnes, 77236, Île de France" },

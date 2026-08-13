@@ -10,17 +10,17 @@ function PhotoCarousel({ images }) {
         <img src={images[index]} alt="" className="size-full object-cover" />
         <button
           onClick={() => setIndex((i) => (i - 1 + images.length) % images.length)}
-          className="absolute top-1/2 left-5 -translate-y-1/2 bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+          className="group absolute top-1/2 left-5 -translate-y-1/2 bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center transition-colors hover:bg-brand-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
           aria-label="Photo précédente"
         >
-          <CaretLeft size={20} className="text-brand-blue" />
+          <CaretLeft size={20} className="text-brand-blue transition-colors group-hover:text-white" />
         </button>
         <button
           onClick={() => setIndex((i) => (i + 1) % images.length)}
-          className="absolute top-1/2 right-5 -translate-y-1/2 bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+          className="group absolute top-1/2 right-5 -translate-y-1/2 bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center transition-colors hover:bg-brand-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
           aria-label="Photo suivante"
         >
-          <CaretRight size={20} className="text-brand-blue" />
+          <CaretRight size={20} className="text-brand-blue transition-colors group-hover:text-white" />
         </button>
       </div>
       <div className="flex gap-4 w-full">

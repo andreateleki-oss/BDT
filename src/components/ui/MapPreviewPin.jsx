@@ -8,6 +8,8 @@ const CLOSE_DELAY = 250
 function MapPreviewPin({ style, offer }) {
   const [hovered, setHovered] = useState(false)
   const closeTimer = useRef(null)
+  // Not enough room to open upward when the pin sits near the top of the map — open downward instead.
+  const openUpward = parseFloat(style?.top) > 40
 
   function handleEnter() {
     if (closeTimer.current) {
@@ -22,7 +24,10 @@ function MapPreviewPin({ style, offer }) {
   }
 
   return (
-    <div className="absolute -translate-x-1/2 -translate-y-full size-4" style={style}>
+    <div
+      className={`absolute -translate-x-1/2 -translate-y-full size-4 ${hovered ? "z-20" : "z-0"}`}
+      style={style}
+    >
       <div className="relative size-4" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
         <div
           className={`size-4 rounded-full bg-brand-red border-2 border-white shadow-md transition-transform ${
@@ -34,11 +39,13 @@ function MapPreviewPin({ style, offer }) {
         <AnimatePresence>
           {hovered && (
             <motion.div
-              initial={{ opacity: 0, y: 6, scale: 0.96 }}
+              initial={{ opacity: 0, y: openUpward ? 6 : -6, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 6, scale: 0.96 }}
+              exit={{ opacity: 0, y: openUpward ? 6 : -6, scale: 0.96 }}
               transition={{ duration: 0.15 }}
-              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-[230px] bg-white shadow-xl z-10"
+              className={`absolute left-1/2 -translate-x-1/2 w-[230px] bg-white shadow-xl z-10 ${
+                openUpward ? "bottom-full mb-3" : "top-full mt-3"
+              }`}
             >
               <Link to={`/offre/${offer.id}`} className="block">
                 <img src={offer.image} alt={offer.title} className="w-full h-[140px] object-cover" />

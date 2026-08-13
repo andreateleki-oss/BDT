@@ -13,10 +13,10 @@ const PINS = [
 function ControlButton({ icon: Icon, className = "", ...props }) {
   return (
     <button
-      className={`bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${className}`}
+      className={`group bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center transition-colors hover:bg-brand-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${className}`}
       {...props}
     >
-      <Icon size={20} className="text-brand-blue" />
+      <Icon size={20} className="text-brand-blue transition-colors group-hover:text-white" />
     </button>
   )
 }

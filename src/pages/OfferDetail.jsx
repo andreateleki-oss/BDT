@@ -14,12 +14,19 @@ import Footer from "../components/Footer"
 import { useScrollSpy } from "../hooks/useScrollSpy"
 import { OFFERS } from "../data/offers"
 
-import propertyPhoto from "../assets/images/property-card.png"
-import studiesPhoto from "../assets/images/studies-photo.png"
-import implantedPhoto from "../assets/images/implanted-photo.png"
 import sectorPhoto from "../assets/images/sector-journey-photo.png"
+import siloPhoto from "../assets/images/silo-site.jpg"
+import brickFacadePhoto from "../assets/images/brick-facade.jpg"
+import factoryChimneyPhoto from "../assets/images/factory-chimney.jpg"
 
-const CAROUSEL_IMAGES = [propertyPhoto, studiesPhoto, implantedPhoto, sectorPhoto]
+// studies-photo.png and implanted-photo.png (512px wide) are excluded here: this carousel's
+// tall crop (~681x400) would upscale them 1.3-1.8x and look soft. These 4 assets are high-res enough.
+const CAROUSEL_IMAGES = [
+  siloPhoto,
+  brickFacadePhoto,
+  factoryChimneyPhoto,
+  sectorPhoto,
+]
 
 function OfferDetail() {
   const { id } = useParams()

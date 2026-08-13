@@ -77,10 +77,10 @@ function LotAccordionItem({ lot, open, onToggle, onExpandPlan, planImage }) {
                 <img src={planImage} alt="Plan de la parcelle" className="w-full h-[229px] object-cover" />
                 <button
                   onClick={onExpandPlan}
-                  className="absolute top-2 right-2 bg-white border border-brand-blue rounded-sm size-6 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+                  className="group absolute top-2 right-2 bg-white border border-brand-blue rounded-sm size-6 flex items-center justify-center transition-colors hover:bg-brand-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
                   aria-label="Agrandir le plan"
                 >
-                  <FrameCorners size={14} className="text-brand-blue" />
+                  <FrameCorners size={14} className="text-brand-blue transition-colors group-hover:text-white" />
                 </button>
               </div>
             </div>

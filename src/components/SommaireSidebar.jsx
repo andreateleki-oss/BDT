@@ -4,7 +4,7 @@ const ITEMS = [
   { id: "environnement", label: "Environnement" },
   { id: "lots", label: "Lots disponibles" },
   { id: "tissu-economique", label: "Tissu économique et formations" },
-  { id: "specificite", label: "Facilité d'implémentation" },
+  { id: "specificite", label: "Spécificités du site" },
   { id: "contacter", label: "Contacter" },
 ]
 

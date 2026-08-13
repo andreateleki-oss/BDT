@@ -7,7 +7,7 @@ import AllFiltersModal, { toModalInitialValues } from "../components/AllFiltersM
 import Footer from "../components/Footer"
 import { OFFERS, filterOffers } from "../data/offers"
 
-const PAGE_SIZE = 6
+const PAGE_SIZE = 8
 
 function GridView() {
   const { state } = useLocation()
