@@ -41,14 +41,14 @@ function OfferDetailHeader({ title = "Nom du site", onContact }) {
         </p>
         <div className="flex gap-2 items-center">
           <button
-            className="bg-white border border-brand-blue rounded-sm size-12 flex items-center justify-center"
+            className="bg-white border border-brand-blue rounded-sm size-12 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
             aria-label="Télécharger la fiche PDF"
           >
             <FilePdf size={20} className="text-brand-blue" />
           </button>
           <button
             onClick={() => setFavorited((f) => !f)}
-            className="bg-white border border-brand-blue rounded-sm size-12 flex items-center justify-center hover:bg-brand-blue/5"
+            className="bg-white border border-brand-blue rounded-sm size-12 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
             aria-label="Ajouter aux favoris"
           >
             <Heart size={20} weight={favorited ? "fill" : "regular"} className="text-brand-red" />

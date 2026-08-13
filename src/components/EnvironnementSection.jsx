@@ -13,7 +13,7 @@ function EnvironnementSection() {
         <img src={mapZoomed} alt="Environnement du site" className="size-full object-cover" />
         <button
           onClick={() => setOpen(true)}
-          className="absolute top-5 right-5 bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center"
+          className="absolute top-5 right-5 bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
           aria-label="Agrandir"
         >
           <ArrowsOutSimple size={20} className="text-brand-blue" />

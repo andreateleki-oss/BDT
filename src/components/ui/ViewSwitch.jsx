@@ -7,8 +7,8 @@ function ViewSwitch({ active, filters }) {
       <Link
         to="/offres"
         state={filters}
-        className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[14px] font-medium ${
-          active === "grille" ? "bg-brand-blue text-white" : "text-brand-blue"
+        className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[14px] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
+          active === "grille" ? "bg-brand-blue text-white" : "text-brand-blue hover:bg-brand-blue/10"
         }`}
       >
         <GridFour size={18} />
@@ -17,8 +17,8 @@ function ViewSwitch({ active, filters }) {
       <Link
         to="/offres/liste"
         state={filters}
-        className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[14px] font-medium ${
-          active === "carte" ? "bg-brand-blue text-white" : "text-brand-blue"
+        className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[14px] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
+          active === "carte" ? "bg-brand-blue text-white" : "text-brand-blue hover:bg-brand-blue/10"
         }`}
       >
         <MapTrifold size={16} />

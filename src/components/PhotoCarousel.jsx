@@ -10,14 +10,14 @@ function PhotoCarousel({ images }) {
         <img src={images[index]} alt="" className="size-full object-cover" />
         <button
           onClick={() => setIndex((i) => (i - 1 + images.length) % images.length)}
-          className="absolute top-1/2 left-5 -translate-y-1/2 bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center"
+          className="absolute top-1/2 left-5 -translate-y-1/2 bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
           aria-label="Photo précédente"
         >
           <CaretLeft size={20} className="text-brand-blue" />
         </button>
         <button
           onClick={() => setIndex((i) => (i + 1) % images.length)}
-          className="absolute top-1/2 right-5 -translate-y-1/2 bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center"
+          className="absolute top-1/2 right-5 -translate-y-1/2 bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
           aria-label="Photo suivante"
         >
           <CaretRight size={20} className="text-brand-blue" />
@@ -28,7 +28,7 @@ function PhotoCarousel({ images }) {
           <button
             key={i}
             onClick={() => setIndex(i)}
-            className={`flex-1 aspect-[215/121] overflow-hidden ${
+            className={`flex-1 aspect-[215/121] overflow-hidden transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
               i === index ? "ring-2 ring-brand-blue" : ""
             }`}
           >

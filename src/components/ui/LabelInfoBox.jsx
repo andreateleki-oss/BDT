@@ -16,7 +16,10 @@ function LabelInfoBox({ label, tag, checked, onChange }) {
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
         incididunt ut labore et dolore magna aliqua.
       </p>
-      <button type="button" className="flex items-center gap-2 text-brand-blue font-accent font-semibold underline">
+      <button
+        type="button"
+        className="flex items-center gap-2 text-brand-blue font-accent font-semibold underline rounded-sm transition-colors hover:text-brand-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+      >
         en savoir plus
         <ArrowSquareOut size={20} />
       </button>

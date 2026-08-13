@@ -23,7 +23,7 @@ function Lightbox({ open, onClose, image, alt }) {
             <img src={image} alt={alt} className="max-w-full max-h-full object-contain shadow-2xl" />
             <button
               onClick={onClose}
-              className="absolute top-0 right-0 bg-white rounded-full p-2"
+              className="absolute top-0 right-0 bg-white rounded-full p-2 transition-colors hover:bg-grey-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
               aria-label="Fermer"
             >
               <X size={24} className="text-brand-blue" />

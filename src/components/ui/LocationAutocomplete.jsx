@@ -118,7 +118,7 @@ function LocationAutocomplete({ label, placeholder, value, onChange, onSelect, c
       {label && (
         <p className="font-heading text-[12px] uppercase text-brand-blue">{label}</p>
       )}
-      <div className="h-12 bg-grey-50 border border-grey-200 flex items-center px-[17px]">
+      <div className="h-12 bg-grey-50 border border-grey-200 flex items-center px-[17px] transition-colors hover:border-brand-blue focus-within:border-brand-blue">
         <input
           type="text"
           value={query}
@@ -132,7 +132,7 @@ function LocationAutocomplete({ label, placeholder, value, onChange, onSelect, c
         />
       </div>
       {open && filtered.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-grey-200 shadow-lg z-30 max-h-72 overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-grey-200 shadow-lg z-30 max-h-[135px] overflow-y-auto">
           {filtered.map((loc) => (
             <button
               type="button"
@@ -142,7 +142,7 @@ function LocationAutocomplete({ label, placeholder, value, onChange, onSelect, c
                 setOpen(false)
                 onSelect?.(loc.label)
               }}
-              className="w-full flex items-center justify-between gap-3 text-left px-[17px] py-3 text-[15px] text-brand-blue hover:bg-grey-50"
+              className="w-full flex items-center justify-between gap-3 text-left px-[17px] py-3 text-[15px] text-brand-blue hover:bg-grey-50 focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-brand-blue"
             >
               <span>{loc.label}</span>
               <span className="text-[12px] uppercase text-grey shrink-0">{loc.type}</span>

@@ -24,7 +24,11 @@ function MapPreviewPin({ style, offer }) {
   return (
     <div className="absolute -translate-x-1/2 -translate-y-full size-4" style={style}>
       <div className="relative size-4" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
-        <div className="size-4 rounded-full bg-brand-red border-2 border-white shadow-md" />
+        <div
+          className={`size-4 rounded-full bg-brand-red border-2 border-white shadow-md transition-transform ${
+            hovered ? "scale-125" : ""
+          }`}
+        />
         <div className="absolute -inset-3 cursor-pointer" />
 
         <AnimatePresence>

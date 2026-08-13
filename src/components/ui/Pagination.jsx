@@ -8,7 +8,7 @@ function Pagination({ page, pageCount, onChange }) {
       <button
         disabled={page <= 1}
         onClick={() => onChange(page - 1)}
-        className="h-10 px-4 flex items-center gap-2 rounded-md text-[14px] font-medium text-[#323232] disabled:opacity-50"
+        className="h-10 px-4 flex items-center gap-2 rounded-md text-[14px] font-medium text-[#323232] transition-colors hover:enabled:bg-grey-100 disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
       >
         <CaretLeft size={20} />
         Précédent
@@ -18,8 +18,8 @@ function Pagination({ page, pageCount, onChange }) {
         <button
           key={p}
           onClick={() => onChange(p)}
-          className={`h-10 px-4 flex items-center justify-center rounded-sm text-[14px] font-medium ${
-            p === page ? "bg-brand-blue text-white" : "text-brand-blue"
+          className={`h-10 px-4 flex items-center justify-center rounded-sm text-[14px] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
+            p === page ? "bg-brand-blue text-white" : "text-brand-blue hover:bg-grey-100"
           }`}
         >
           {p}
@@ -33,7 +33,7 @@ function Pagination({ page, pageCount, onChange }) {
       <button
         disabled={page >= pageCount}
         onClick={() => onChange(page + 1)}
-        className="h-10 px-4 flex items-center gap-2 rounded-md text-[14px] font-medium text-brand-blue disabled:opacity-50"
+        className="h-10 px-4 flex items-center gap-2 rounded-md text-[14px] font-medium text-brand-blue transition-colors hover:enabled:bg-grey-100 disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
       >
         Suivant
         <CaretRight size={20} />

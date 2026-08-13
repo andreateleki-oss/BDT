@@ -3,7 +3,10 @@ import { MapPin, ArrowsOut, Toolbox, Handshake } from "@phosphor-icons/react"
 
 function OfferListItem({ to, image, title, location, surface, sector, tag, isRental }) {
   return (
-    <Link to={to} className="flex gap-4 items-start w-full group">
+    <Link
+      to={to}
+      className="flex gap-4 items-start w-full group rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+    >
       <div className="relative size-[135px] shrink-0 overflow-hidden">
         <img
           src={image}
@@ -13,7 +16,7 @@ function OfferListItem({ to, image, title, location, surface, sector, tag, isRen
       </div>
       <div className="flex-1 flex flex-col gap-2 min-w-0">
         <div className="flex items-start justify-between gap-2">
-          <p className="flex-1 font-heading font-medium text-[16px] tracking-[-0.44px] text-brand-blue truncate">
+          <p className="flex-1 font-heading font-medium text-[16px] tracking-[-0.44px] text-brand-blue truncate transition-colors group-hover:text-brand-red">
             {title}
           </p>
           {tag && (

@@ -24,7 +24,7 @@ function LotAccordionItem({ lot, open, onToggle, onExpandPlan, planImage }) {
     <div className="bg-grey-200 border border-grey-200 overflow-hidden w-full">
       <button
         onClick={onToggle}
-        className="bg-white flex items-center justify-between p-4 w-full text-left"
+        className="bg-white flex items-center justify-between p-4 w-full text-left transition-colors hover:bg-grey-50 focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-brand-blue"
       >
         <div className="flex-1 flex items-baseline gap-4 text-brand-blue text-[16px]">
           <p className="flex-1 font-heading font-medium leading-[1.2] tracking-[-0.44px] truncate">
@@ -77,7 +77,7 @@ function LotAccordionItem({ lot, open, onToggle, onExpandPlan, planImage }) {
                 <img src={planImage} alt="Plan de la parcelle" className="w-full h-[229px] object-cover" />
                 <button
                   onClick={onExpandPlan}
-                  className="absolute top-2 right-2 bg-white border border-brand-blue rounded-sm size-6 flex items-center justify-center"
+                  className="absolute top-2 right-2 bg-white border border-brand-blue rounded-sm size-6 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
                   aria-label="Agrandir le plan"
                 >
                   <FrameCorners size={14} className="text-brand-blue" />

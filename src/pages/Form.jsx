@@ -14,8 +14,8 @@ function RequestTypeChip({ label, active, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`h-8 flex items-center px-2 rounded-full text-[14px] font-semibold border border-brand-blue ${
-        active ? "bg-brand-blue text-white" : "bg-white text-brand-blue"
+      className={`h-8 flex items-center px-2 rounded-full text-[14px] font-semibold border border-brand-blue transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
+        active ? "bg-brand-blue text-white hover:bg-brand-blue/90" : "bg-white text-brand-blue hover:bg-brand-blue/5"
       }`}
     >
       {label}
@@ -32,7 +32,7 @@ function LabeledInput({ label, placeholder, value, onChange, type = "text" }) {
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="bg-grey-50 border border-grey-200 h-[120px] px-[17px] py-[13px] text-[15px] text-brand-blue placeholder:text-grey w-full resize-none"
+          className="bg-grey-50 border border-grey-200 h-[120px] px-[17px] py-[13px] text-[15px] text-brand-blue placeholder:text-grey w-full resize-none transition-colors focus:border-brand-blue outline-none"
         />
       ) : (
         <input
@@ -40,7 +40,7 @@ function LabeledInput({ label, placeholder, value, onChange, type = "text" }) {
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="bg-grey-50 border border-grey-200 h-12 px-[17px] text-[15px] text-brand-blue placeholder:text-grey w-full"
+          className="bg-grey-50 border border-grey-200 h-12 px-[17px] text-[15px] text-brand-blue placeholder:text-grey w-full transition-colors focus:border-brand-blue outline-none"
         />
       )}
     </div>
@@ -187,7 +187,7 @@ function Form() {
                       value={siteUrl}
                       onChange={(e) => setSiteUrl(e.target.value)}
                       placeholder="http://url.du.site"
-                      className="bg-grey-50 border border-grey-200 h-12 px-[17px] text-[15px] text-brand-blue placeholder:text-grey w-full"
+                      className="bg-grey-50 border border-grey-200 h-12 px-[17px] text-[15px] text-brand-blue placeholder:text-grey w-full transition-colors focus:border-brand-blue outline-none"
                     />
                   </div>
                   <Button variant="solid" icon={Check} onClick={handleValidateSite}>

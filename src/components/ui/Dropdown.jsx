@@ -21,7 +21,7 @@ function Dropdown({ label, placeholder, options, value, onChange, className = ""
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className={`h-12 flex items-center justify-between px-[17px] border text-left ${
+        className={`h-12 flex items-center justify-between px-[17px] border text-left transition-colors hover:border-brand-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
           muted ? "bg-grey-50 border-grey-200" : "bg-white border-grey-200"
         }`}
       >
@@ -43,7 +43,7 @@ function Dropdown({ label, placeholder, options, value, onChange, className = ""
                 onChange(opt)
                 setOpen(false)
               }}
-              className="w-full text-left px-[17px] py-3 text-[15px] text-brand-blue hover:bg-grey-50"
+              className="w-full text-left px-[17px] py-3 text-[15px] text-brand-blue hover:bg-grey-50 focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-brand-blue"
             >
               {opt}
             </button>

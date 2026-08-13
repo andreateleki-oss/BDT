@@ -16,7 +16,10 @@ function PropertyCard({
   const Wrapper = to ? Link : "div"
 
   return (
-    <Wrapper to={to} className="flex-1 flex flex-col gap-6 group">
+    <Wrapper
+      to={to}
+      className="flex-1 flex flex-col gap-6 group rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+    >
       <div className="relative aspect-square w-full overflow-hidden">
         <img
           src={image}
@@ -31,7 +34,7 @@ function PropertyCard({
       </div>
       <div className={`flex flex-col ${compact ? "gap-2" : "gap-4"}`}>
         <p
-          className={`font-heading font-medium text-brand-blue leading-[1.2] ${
+          className={`font-heading font-medium text-brand-blue leading-[1.2] transition-colors group-hover:text-brand-red ${
             compact ? "text-[16px] tracking-[-0.44px]" : "text-[20px] tracking-[-0.3px]"
           }`}
         >

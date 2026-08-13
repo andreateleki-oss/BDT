@@ -16,8 +16,8 @@ function FilterPill({ label, icon: Icon, onOpenFull, options, value, renderConte
     <div className="relative" ref={ref}>
       <button
         onClick={() => (onOpenFull ? onOpenFull() : setOpen((o) => !o))}
-        className={`h-6 flex items-center gap-1 px-2 border border-brand-blue rounded-full text-[14px] font-semibold whitespace-nowrap ${
-          value ? "bg-brand-blue text-white" : "text-brand-blue"
+        className={`h-6 flex items-center gap-1 px-2 border border-brand-blue rounded-full text-[14px] font-semibold whitespace-nowrap transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
+          value ? "bg-brand-blue text-white hover:bg-brand-blue/90" : "text-brand-blue hover:bg-brand-blue/5"
         }`}
       >
         {value || label}
@@ -34,8 +34,8 @@ function FilterPill({ label, icon: Icon, onOpenFull, options, value, renderConte
             renderContent({ close: () => setOpen(false) })
           ) : options && options.length > 0 ? (
             options.map((opt) => (
-              <label key={opt} className="flex items-center gap-2 text-[14px] text-grey-900">
-                <input type="checkbox" />
+              <label key={opt} className="flex items-center gap-2 text-[14px] text-grey-900 hover:text-brand-blue cursor-pointer transition-colors">
+                <input type="checkbox" className="accent-brand-red" />
                 {opt}
               </label>
             ))

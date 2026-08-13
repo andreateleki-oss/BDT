@@ -146,7 +146,7 @@ function HeaderFilter({ activeView = "grille", onOpenAllFilters, filterValues = 
           <Button variant="outline" className="!h-auto !py-1 !px-4 text-[14px]">
             Mon compte
           </Button>
-          <button className="flex items-center gap-2 px-4 py-1 text-brand-blue font-accent font-semibold underline">
+          <button className="flex items-center gap-2 px-4 py-1 text-brand-blue font-accent font-semibold underline rounded-sm transition-colors hover:text-brand-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue">
             <Globe size={20} />
             FR
             <CaretDown size={20} />
@@ -154,12 +154,19 @@ function HeaderFilter({ activeView = "grille", onOpenAllFilters, filterValues = 
         </div>
         <div className="h-px bg-grey-200 mt-4" />
         <div className="flex items-center justify-between px-10">
-          <Link to="/">
+          <Link
+            to="/"
+            className="rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+          >
             <img src={logo} alt="Foncier+" className="h-[72px] w-auto" />
           </Link>
           <nav className="flex gap-6 items-center font-heading text-[16px] text-brand-blue">
             {NAV_LINKS.map((link) => (
-              <a key={link} href="#" className="h-12 flex items-center hover:opacity-70">
+              <a
+                key={link}
+                href="#"
+                className="h-12 flex items-center rounded-sm transition-opacity hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+              >
                 {link}
               </a>
             ))}
@@ -171,7 +178,7 @@ function HeaderFilter({ activeView = "grille", onOpenAllFilters, filterValues = 
         <div className="flex gap-2 items-start">
           <button
             onClick={onOpenAllFilters}
-            className="h-6 flex items-center gap-1 px-2 border border-brand-blue rounded-full text-[14px] font-semibold text-brand-blue"
+            className="h-6 flex items-center gap-1 px-2 border border-brand-blue rounded-full text-[14px] font-semibold text-brand-blue transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
           >
             Filters
             <FadersHorizontal size={20} />

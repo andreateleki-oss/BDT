@@ -36,7 +36,13 @@ function Footer() {
               <p className="font-heading text-[24px]">{col.title}</p>
               <div className="flex flex-col gap-4 font-heading text-[14px]">
                 {col.links.map((link) => (
-                  <p key={link}>{link}</p>
+                  <a
+                    key={link}
+                    href="#"
+                    className="rounded-sm transition-opacity hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  >
+                    {link}
+                  </a>
                 ))}
               </div>
             </div>

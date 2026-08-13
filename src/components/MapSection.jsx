@@ -85,7 +85,7 @@ function MapSection() {
             className="w-[296px]"
           />
           <button
-            className="bg-brand-red text-white h-12 px-4 font-semibold text-[15px]"
+            className="bg-brand-red text-white h-12 px-4 font-semibold text-[15px] transition-colors hover:bg-brand-red/90 active:bg-brand-red/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
             onClick={() => navigate("/offres/liste", { state: { localisation: region } })}
           >
             Explorer le foncier dans votre région

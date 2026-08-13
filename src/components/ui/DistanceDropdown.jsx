@@ -18,7 +18,7 @@ function DistanceDropdown({ options, value, onChange, placeholder = "Sélectionn
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="border-l border-grey-200 pl-2 flex items-center gap-1 h-full"
+        className="border-l border-grey-200 pl-2 flex items-center gap-1 h-full hover:text-brand-blue transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
       >
         <span className={`text-[15px] whitespace-nowrap ${value ? "text-brand-blue" : "text-grey"}`}>
           {value || placeholder}
@@ -33,23 +33,23 @@ function DistanceDropdown({ options, value, onChange, placeholder = "Sélectionn
       {open && (
         <div className="absolute top-full right-0 mt-1 bg-white border border-grey-200 shadow-lg rounded-sm z-30 p-4 flex flex-col gap-4 w-max">
           {options.map((opt) => (
-            <label key={opt} className="flex items-center gap-2 cursor-pointer">
-              <span
-                className={`size-6 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                  value === opt ? "border-brand-red" : "border-grey-300"
-                }`}
-              >
-                {value === opt && <span className="size-3 rounded-full bg-brand-red" />}
-              </span>
+            <label key={opt} className="group flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
-                className="sr-only"
+                className="sr-only peer"
                 checked={value === opt}
                 onChange={() => {
                   onChange(opt)
                   setOpen(false)
                 }}
               />
+              <span
+                className={`size-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-brand-blue ${
+                  value === opt ? "border-brand-red" : "border-grey-300 group-hover:border-brand-blue"
+                }`}
+              >
+                {value === opt && <span className="size-3 rounded-full bg-brand-red" />}
+              </span>
               <span className="text-[14px] font-semibold text-grey-900 whitespace-nowrap">{opt}</span>
             </label>
           ))}

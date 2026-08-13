@@ -25,7 +25,7 @@ function SommaireSidebar({ activeId }) {
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={`text-left font-heading text-[16px] leading-[1.2] tracking-[-0.44px] ${
+              className={`text-left font-heading text-[16px] leading-[1.2] tracking-[-0.44px] rounded-sm transition-colors hover:text-brand-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
                 isActive ? "font-medium text-brand-red" : "font-normal text-brand-blue"
               }`}
             >

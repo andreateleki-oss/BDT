@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { X } from "@phosphor-icons/react"
 import AccordionSection from "./ui/AccordionSection"
@@ -64,9 +64,27 @@ function computeFilterValues(filters) {
   }
 }
 
-function AllFiltersModal({ open, onClose, onApply }) {
+export function toModalInitialValues(activeFilters = {}) {
+  return {
+    location: activeFilters.localisation || "",
+    secteur: activeFilters.secteur || null,
+    acquisition: activeFilters.typeImplementation || { achat: false, location: false },
+    bien: activeFilters.typeOffre || { terrain: false, immobilier: false },
+    surface: activeFilters.surface?.value || "0",
+    surfaceUnit: activeFilters.surface?.unit || "Ha",
+  }
+}
+
+function AllFiltersModal({ open, onClose, onApply, initialValues }) {
   const [openSections, setOpenSections] = useState(new Set(SECTIONS))
   const [filters, setFilters] = useState(initialState)
+
+  useEffect(() => {
+    if (open) {
+      setFilters({ ...initialState(), ...initialValues })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
 
   function toggleSection(id) {
     setOpenSections((prev) => {
@@ -106,14 +124,21 @@ function AllFiltersModal({ open, onClose, onApply }) {
             <div className="bg-white w-[661px] max-w-full max-h-[85vh] flex flex-col items-center overflow-hidden">
               <div className="border-b border-grey-200 flex items-center px-6 py-4 w-full shrink-0">
                 <div className="flex-1">
-                  <button onClick={onClose} aria-label="Fermer">
+                  <button
+                    onClick={onClose}
+                    aria-label="Fermer"
+                    className="rounded-sm p-1 -m-1 transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+                  >
                     <X size={20} className="text-brand-blue" />
                   </button>
                 </div>
                 <p className="flex-1 font-heading font-medium text-[16px] tracking-[-0.44px] text-brand-blue text-center">
                   Tous les filtres
                 </p>
-                <button onClick={reset} className="flex-1 text-[16px] text-grey text-right">
+                <button
+                  onClick={reset}
+                  className="flex-1 text-[16px] text-grey text-right rounded-sm transition-colors hover:text-brand-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+                >
                   Réinitialiser
                 </button>
               </div>
@@ -381,7 +406,7 @@ function AllFiltersModal({ open, onClose, onApply }) {
               <div className="border-t border-grey-200 flex items-center justify-center py-4 w-full shrink-0">
                 <button
                   onClick={handleApply}
-                  className="bg-brand-red text-white h-12 px-4 font-semibold text-[14px]"
+                  className="bg-brand-red text-white h-12 px-4 font-semibold text-[14px] transition-colors hover:bg-brand-red/90 active:bg-brand-red/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
                 >
                   Voir les résultats
                 </button>

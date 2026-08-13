@@ -51,7 +51,7 @@ function HeroSearch() {
 
   return (
     <section
-      className="relative flex items-center px-[114px] py-[60px] overflow-hidden bg-cover bg-center"
+      className="relative flex items-center px-[114px] py-[60px] bg-cover bg-center"
       style={{ backgroundImage: `url(${heroBg})` }}
     >
       <div className="flex-1 flex flex-col gap-12 relative z-10">
@@ -158,6 +158,14 @@ function HeroSearch() {
         open={filtersOpen}
         onClose={() => setFiltersOpen(false)}
         onApply={(filterValues) => navigate("/offres/liste", { state: filterValues })}
+        initialValues={{
+          location,
+          acquisition: { achat: forSale.acheter, location: forSale.louer },
+          bien: { ...offerType },
+          surface: surface || "0",
+          surfaceUnit,
+          secteur: sector,
+        }}
       />
     </section>
   )
