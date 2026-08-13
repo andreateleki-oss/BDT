@@ -1,0 +1,43 @@
+import { useState } from "react"
+import { CaretLeft, CaretRight } from "@phosphor-icons/react"
+
+function PhotoCarousel({ images }) {
+  const [index, setIndex] = useState(0)
+
+  return (
+    <div className="flex flex-col gap-4 w-full">
+      <div className="relative w-full h-[400px] overflow-hidden">
+        <img src={images[index]} alt="" className="size-full object-cover" />
+        <button
+          onClick={() => setIndex((i) => (i - 1 + images.length) % images.length)}
+          className="absolute top-1/2 left-5 -translate-y-1/2 bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center"
+          aria-label="Photo précédente"
+        >
+          <CaretLeft size={20} className="text-brand-blue" />
+        </button>
+        <button
+          onClick={() => setIndex((i) => (i + 1) % images.length)}
+          className="absolute top-1/2 right-5 -translate-y-1/2 bg-white border border-brand-blue rounded-sm size-11 flex items-center justify-center"
+          aria-label="Photo suivante"
+        >
+          <CaretRight size={20} className="text-brand-blue" />
+        </button>
+      </div>
+      <div className="flex gap-4 w-full">
+        {images.map((img, i) => (
+          <button
+            key={i}
+            onClick={() => setIndex(i)}
+            className={`flex-1 aspect-[215/121] overflow-hidden ${
+              i === index ? "ring-2 ring-brand-blue" : ""
+            }`}
+          >
+            <img src={img} alt="" className="size-full object-cover" />
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default PhotoCarousel

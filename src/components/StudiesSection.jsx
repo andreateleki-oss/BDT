@@ -1,0 +1,52 @@
+import { useState } from "react"
+import CarouselHeader from "./ui/CarouselHeader"
+import CarouselNav from "./ui/CarouselNav"
+import ArticleCard from "./ArticleCard"
+import studiesPhoto from "../assets/images/studies-photo.png"
+
+const ARTICLES = Array.from({ length: 6 }, (_, i) => ({
+  image: studiesPhoto,
+  category: "Étude de cas",
+  title: "Marché du foncier industriel 2025 - Synthèse nationale",
+  description:
+    "Analyse approfondie des dynamiques territoriales et opportunités d'implantation pour l'année à venir.",
+}))
+
+const PAGE_SIZE = 3
+const PAGES = Array.from({ length: Math.ceil(ARTICLES.length / PAGE_SIZE) }, (_, i) =>
+  ARTICLES.slice(i * PAGE_SIZE, i * PAGE_SIZE + PAGE_SIZE)
+)
+
+function StudiesSection() {
+  const [page, setPage] = useState(0)
+
+  return (
+    <section className="flex flex-col gap-11 items-center justify-center py-10 px-[114px]">
+      <CarouselHeader titleLight="Études et guides de" titleBold="nos partenaires">
+        <CarouselNav
+          onPrev={() => setPage((p) => Math.max(0, p - 1))}
+          onNext={() => setPage((p) => Math.min(PAGES.length - 1, p + 1))}
+          canPrev={page > 0}
+          canNext={page < PAGES.length - 1}
+        />
+      </CarouselHeader>
+
+      <div className="w-full overflow-hidden">
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${page * 100}%)` }}
+        >
+          {PAGES.map((pageArticles, i) => (
+            <div key={i} className="flex gap-16 w-full shrink-0">
+              {pageArticles.map((article, j) => (
+                <ArticleCard key={j} {...article} />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default StudiesSection
