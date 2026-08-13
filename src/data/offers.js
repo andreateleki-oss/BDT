@@ -190,7 +190,7 @@ function parseSurfaceToHa(surface) {
   return surface.includes("m²") ? value / 10000 : value
 }
 
-const MIN_RESULTS = 3
+const MIN_RESULTS = 5
 
 export function filterOffers(offers, filters = {}) {
   const matched = offers.filter((offer) => {

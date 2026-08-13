@@ -1,7 +1,7 @@
-import { CaretLeft, CaretRight, DotsThree } from "@phosphor-icons/react"
+import { CaretLeft, CaretRight } from "@phosphor-icons/react"
 
 function Pagination({ page, pageCount, onChange }) {
-  const pages = [1, 2, 3]
+  const pages = Array.from({ length: pageCount }, (_, i) => i + 1)
 
   return (
     <div className="flex gap-1 items-center">
@@ -25,10 +25,6 @@ function Pagination({ page, pageCount, onChange }) {
           {p}
         </button>
       ))}
-
-      <div className="size-10 flex items-center justify-center">
-        <DotsThree size={20} className="text-brand-blue" />
-      </div>
 
       <button
         disabled={page >= pageCount}

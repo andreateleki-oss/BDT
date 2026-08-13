@@ -10,17 +10,22 @@ function ListView() {
   const { state } = useLocation()
   const [expanded, setExpanded] = useState(false)
   const [filtersOpen, setFiltersOpen] = useState(false)
-  const [activeFilters, setActiveFilters] = useState(state ?? {})
+  const [draftFilters, setDraftFilters] = useState(state ?? {})
+  const [appliedFilters, setAppliedFilters] = useState(state ?? {})
 
-  const offers = filterOffers(OFFERS, activeFilters)
+  const offers = filterOffers(OFFERS, appliedFilters)
+  const hasPendingChanges = JSON.stringify(draftFilters) !== JSON.stringify(appliedFilters)
 
   return (
     <main className="font-body h-screen flex flex-col">
       <HeaderFilter
         activeView="carte"
         onOpenAllFilters={() => setFiltersOpen(true)}
-        filterValues={activeFilters}
-        onFilterChange={(key, value) => setActiveFilters((f) => ({ ...f, [key]: value || null }))}
+        filterValues={draftFilters}
+        appliedFilterValues={appliedFilters}
+        hasPendingChanges={hasPendingChanges}
+        onRefresh={() => setAppliedFilters(draftFilters)}
+        onFilterChange={(key, value) => setDraftFilters((f) => ({ ...f, [key]: value || null }))}
       />
 
       <div className="flex-1 flex overflow-hidden">
@@ -49,8 +54,11 @@ function ListView() {
       <AllFiltersModal
         open={filtersOpen}
         onClose={() => setFiltersOpen(false)}
-        onApply={(filterValues) => setActiveFilters(filterValues)}
-        initialValues={toModalInitialValues(activeFilters)}
+        onApply={(filterValues) => {
+          setDraftFilters(filterValues)
+          setAppliedFilters(filterValues)
+        }}
+        initialValues={toModalInitialValues(draftFilters)}
       />
     </main>
   )

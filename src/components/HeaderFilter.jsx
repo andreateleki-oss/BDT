@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { Globe, CaretDown, FadersHorizontal } from "@phosphor-icons/react"
+import { Globe, CaretDown, FadersHorizontal, ArrowsClockwise } from "@phosphor-icons/react"
 import logo from "../assets/images/logo-foncier.png"
 import Button from "./ui/Button"
 import FilterPill from "./ui/FilterPill"
@@ -40,7 +40,15 @@ function displaySurface(v) {
   return v?.value ? `${v.value} ${v.unit}` : null
 }
 
-function HeaderFilter({ activeView = "grille", onOpenAllFilters, filterValues = {}, onFilterChange, onFilterApply }) {
+function HeaderFilter({
+  activeView = "grille",
+  onOpenAllFilters,
+  filterValues = {},
+  onFilterChange,
+  appliedFilterValues,
+  hasPendingChanges = false,
+  onRefresh,
+}) {
   function renderFilterWidget(key, close) {
     switch (key) {
       case "localisation":
@@ -49,10 +57,7 @@ function HeaderFilter({ activeView = "grille", onOpenAllFilters, filterValues = 
             placeholder="Région, département, EPCI, commune"
             value={filterValues.localisation || ""}
             onChange={(v) => onFilterChange?.("localisation", v)}
-            onSelect={() => {
-              onFilterApply?.()
-              close()
-            }}
+            onSelect={() => close()}
           />
         )
       case "secteur":
@@ -63,7 +68,6 @@ function HeaderFilter({ activeView = "grille", onOpenAllFilters, filterValues = 
             value={filterValues.secteur || null}
             onChange={(v) => {
               onFilterChange?.("secteur", v)
-              onFilterApply?.()
               close()
             }}
           />
@@ -75,18 +79,12 @@ function HeaderFilter({ activeView = "grille", onOpenAllFilters, filterValues = 
             <Checkbox
               label="Achat"
               checked={!!v.achat}
-              onChange={() => {
-                onFilterChange?.("typeImplementation", { ...v, achat: !v.achat })
-                onFilterApply?.()
-              }}
+              onChange={() => onFilterChange?.("typeImplementation", { ...v, achat: !v.achat })}
             />
             <Checkbox
               label="Location"
               checked={!!v.location}
-              onChange={() => {
-                onFilterChange?.("typeImplementation", { ...v, location: !v.location })
-                onFilterApply?.()
-              }}
+              onChange={() => onFilterChange?.("typeImplementation", { ...v, location: !v.location })}
             />
           </div>
         )
@@ -98,18 +96,12 @@ function HeaderFilter({ activeView = "grille", onOpenAllFilters, filterValues = 
             <Checkbox
               label="Terrain"
               checked={!!v.terrain}
-              onChange={() => {
-                onFilterChange?.("typeOffre", { ...v, terrain: !v.terrain })
-                onFilterApply?.()
-              }}
+              onChange={() => onFilterChange?.("typeOffre", { ...v, terrain: !v.terrain })}
             />
             <Checkbox
               label="Immobilier"
               checked={!!v.immobilier}
-              onChange={() => {
-                onFilterChange?.("typeOffre", { ...v, immobilier: !v.immobilier })
-                onFilterApply?.()
-              }}
+              onChange={() => onFilterChange?.("typeOffre", { ...v, immobilier: !v.immobilier })}
             />
           </div>
         )
@@ -121,10 +113,7 @@ function HeaderFilter({ activeView = "grille", onOpenAllFilters, filterValues = 
             value={v.value}
             unit={v.unit}
             onChange={(val) => onFilterChange?.("surface", { ...v, value: val })}
-            onUnitChange={(u) => {
-              onFilterChange?.("surface", { ...v, unit: u })
-              onFilterApply?.()
-            }}
+            onUnitChange={(u) => onFilterChange?.("surface", { ...v, unit: u })}
           />
         )
       }
@@ -174,7 +163,7 @@ function HeaderFilter({ activeView = "grille", onOpenAllFilters, filterValues = 
         </div>
       </header>
 
-      <div className="border-t border-grey-200 flex items-center justify-between px-10 py-2">
+      <div className="relative border-t border-grey-200 flex items-center justify-between px-10 py-2">
         <div className="flex gap-2 items-start">
           <button
             onClick={onOpenAllFilters}
@@ -203,7 +192,15 @@ function HeaderFilter({ activeView = "grille", onOpenAllFilters, filterValues = 
             )
           })}
         </div>
-        <ViewSwitch active={activeView} filters={filterValues} />
+        <ViewSwitch active={activeView} filters={appliedFilterValues ?? filterValues} />
+
+        {hasPendingChanges && (
+          <div className="absolute left-1/2 -translate-x-1/2 top-full bg-white shadow-lg rounded-b-lg pt-1 pb-2 px-2 z-30">
+            <Button variant="solid" icon={ArrowsClockwise} onClick={onRefresh}>
+              Actualiser
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )
