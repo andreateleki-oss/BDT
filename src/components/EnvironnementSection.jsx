@@ -9,7 +9,7 @@ function EnvironnementSection() {
   return (
     <section id="environnement" className="flex flex-col gap-6 w-full scroll-mt-24">
       <p className="font-body font-semibold text-[20px] leading-[22.5px] text-brand-blue">Environnement</p>
-      <div className="relative w-full h-[400px] overflow-hidden">
+      <div className="relative w-full h-[240px] lg:h-[400px] overflow-hidden">
         <img src={mapZoomed} alt="Environnement du site" className="size-full object-cover" />
         <button
           onClick={() => setOpen(true)}

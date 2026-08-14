@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { Globe, CaretDown, FadersHorizontal, ArrowsClockwise } from "@phosphor-icons/react"
+import { Globe, CaretDown, FadersHorizontal, ArrowsClockwise, GridFour, MapTrifold } from "@phosphor-icons/react"
 import logo from "../assets/images/logo-foncier.png"
 import Button from "./ui/Button"
 import FilterPill from "./ui/FilterPill"
@@ -125,7 +125,7 @@ function HeaderFilter({
   return (
     <div className="bg-white shadow-[0px_2px_12px_rgba(4,63,84,0.25)] sticky top-0 z-20">
       <header className="bg-white">
-        <div className="flex justify-end items-center gap-2 px-10 pt-4">
+        <div className="flex flex-wrap justify-end items-center gap-2 px-4 pt-4 lg:px-10">
           <Button variant="dark" className="!h-auto !py-1 !px-4 text-[14px]">
             Entreprise
           </Button>
@@ -142,57 +142,75 @@ function HeaderFilter({
           </button>
         </div>
         <div className="h-px bg-grey-200 mt-4" />
-        <div className="flex items-center justify-between px-10">
+        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-3 lg:px-10 lg:py-0">
           <Link
             to="/"
             className="rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
           >
-            <img src={logo} alt="Foncier+" className="h-[72px] w-auto" />
+            <img src={logo} alt="Foncier+" className="h-12 w-auto lg:h-[72px]" />
           </Link>
-          <nav className="flex gap-6 items-center font-heading text-[16px] text-brand-blue">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link}
-                href="#"
-                className="h-12 flex items-center rounded-sm transition-opacity hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
-              >
-                {link}
-              </a>
-            ))}
+          <nav className="flex flex-wrap gap-x-6 gap-y-2 items-center font-heading text-[14px] lg:text-[16px] text-brand-blue">
+            {NAV_LINKS.map((link) => {
+              const className =
+                "h-12 flex items-center rounded-sm transition-opacity hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+              return link === "Rechercher un terrain" ? (
+                <Link key={link} to="/offres" className={className}>
+                  {link}
+                </Link>
+              ) : (
+                <a key={link} href="#" className={className}>
+                  {link}
+                </a>
+              )
+            })}
           </nav>
         </div>
       </header>
 
-      <div className="relative border-t border-grey-200 flex items-center justify-between px-10 py-2">
-        <div className="flex gap-2 items-start">
-          <button
-            onClick={onOpenAllFilters}
-            className="h-6 flex items-center gap-1 px-2 border border-brand-blue rounded-full text-[14px] font-semibold text-brand-blue transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
-          >
-            Filters
-            <FadersHorizontal size={20} />
-          </button>
-          {FILTERS.map((f) => {
-            let displayValue
-            if (f.key === "typeImplementation") displayValue = displayTypeImplementation(filterValues.typeImplementation)
-            else if (f.key === "typeOffre") displayValue = displayTypeOffre(filterValues.typeOffre)
-            else if (f.key === "surface") displayValue = displaySurface(filterValues.surface)
-            else displayValue = filterValues[f.key]
+      <div className="relative border-t border-grey-200 flex flex-col gap-3 px-4 py-2 lg:flex-row lg:items-center lg:justify-between lg:px-10">
+        <div className="flex items-center gap-3 lg:contents">
+          <div className="flex flex-wrap gap-2 items-start lg:flex-nowrap">
+            <button
+              onClick={onOpenAllFilters}
+              className="h-6 flex items-center gap-1 px-2 border border-brand-blue rounded-full text-[14px] font-semibold text-brand-blue transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue shrink-0"
+            >
+              Filters
+              <FadersHorizontal size={20} />
+            </button>
+            {FILTERS.map((f) => {
+              let displayValue
+              if (f.key === "typeImplementation") displayValue = displayTypeImplementation(filterValues.typeImplementation)
+              else if (f.key === "typeOffre") displayValue = displayTypeOffre(filterValues.typeOffre)
+              else if (f.key === "surface") displayValue = displaySurface(filterValues.surface)
+              else displayValue = filterValues[f.key]
 
-            const isCompact = f.key === "typeImplementation" || f.key === "typeOffre"
+              const isCompact = f.key === "typeImplementation" || f.key === "typeOffre"
 
-            return (
-              <FilterPill
-                key={f.label}
-                label={f.label}
-                value={displayValue}
-                contentWidth={isCompact ? "w-[180px]" : "w-[340px]"}
-                renderContent={({ close }) => renderFilterWidget(f.key, close)}
-              />
-            )
-          })}
+              return (
+                <div key={f.label} className="shrink-0">
+                  <FilterPill
+                    label={f.label}
+                    value={displayValue}
+                    contentWidth={isCompact ? "w-[180px]" : "w-[340px]"}
+                    renderContent={({ close }) => renderFilterWidget(f.key, close)}
+                  />
+                </div>
+              )
+            })}
+          </div>
+          <div className="hidden lg:block shrink-0">
+            <ViewSwitch active={activeView} filters={appliedFilterValues ?? filterValues} />
+          </div>
         </div>
-        <ViewSwitch active={activeView} filters={appliedFilterValues ?? filterValues} />
+
+        <Link
+          to={activeView === "grille" ? "/offres/liste" : "/offres"}
+          state={appliedFilterValues ?? filterValues}
+          className="lg:hidden flex items-center justify-center gap-2 h-10 rounded-full bg-brand-blue text-white font-heading font-semibold text-[14px] transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+        >
+          {activeView === "grille" ? <MapTrifold size={18} /> : <GridFour size={18} />}
+          {activeView === "grille" ? "Voir la carte" : "Voir la liste"}
+        </Link>
 
         {hasPendingChanges && (
           <div className="absolute left-1/2 -translate-x-1/2 top-full bg-white shadow-lg rounded-b-lg pt-1 pb-2 px-2 z-30">

@@ -1,7 +1,17 @@
+import { useEffect } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { X } from "@phosphor-icons/react"
 
 function Lightbox({ open, onClose, image, alt }) {
+  useEffect(() => {
+    if (!open) return
+    function handleKeyDown(e) {
+      if (e.key === "Escape") onClose?.()
+    }
+    document.addEventListener("keydown", handleKeyDown)
+    return () => document.removeEventListener("keydown", handleKeyDown)
+  }, [open, onClose])
+
   return (
     <AnimatePresence>
       {open && (

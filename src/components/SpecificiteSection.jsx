@@ -26,7 +26,7 @@ function SpecificiteSection() {
 
       <div className="flex flex-col gap-8">
         {ROWS.map(({ icon: Icon, label, value }) => (
-          <div key={label} className="flex gap-2 items-start">
+          <div key={label} className="flex flex-col gap-2 lg:flex-row lg:items-start">
             <div className="flex-1 flex items-center gap-2">
               <div className="size-7 shrink-0 drop-shadow-[0px_2px_12px_rgba(91,0,2,0.16)] flex items-center justify-center">
                 <Icon size={20} className="text-brand-red" />

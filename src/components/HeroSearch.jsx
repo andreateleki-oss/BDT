@@ -22,7 +22,7 @@ function Keyword({ text }) {
       <div className="bg-brand-red shadow-[0px_2px_12px_rgba(91,0,2,0.16)] size-7 flex items-center justify-center shrink-0">
         <CompassTool size={20} className="text-white" />
       </div>
-      <p className="font-semibold text-[20px] text-white">{text}</p>
+      <p className="font-semibold text-[16px] lg:text-[20px] text-white">{text}</p>
     </div>
   )
 }
@@ -38,7 +38,7 @@ function HeroSearch() {
   const [filtersOpen, setFiltersOpen] = useState(false)
 
   function handleSearch() {
-    navigate("/offres/liste", {
+    navigate("/offres", {
       state: {
         localisation: location || null,
         secteur: sector || null,
@@ -51,12 +51,12 @@ function HeroSearch() {
 
   return (
     <section
-      className="relative flex items-center px-[114px] py-[60px] bg-cover bg-center"
+      className="relative flex items-center px-4 py-10 lg:px-[114px] lg:py-[60px] bg-cover bg-center"
       style={{ backgroundImage: `url(${heroBg})` }}
     >
-      <div className="flex-1 flex flex-col gap-12 relative z-10">
+      <div className="flex-1 flex flex-col gap-8 lg:gap-12 relative z-10">
         <div className="flex flex-col gap-9">
-          <h1 className="font-heading font-bold text-white text-[65px] leading-[1.2] tracking-[-1.04px] max-w-[930px]">
+          <h1 className="font-heading font-bold text-white text-[32px] leading-[1.15] lg:text-[65px] lg:leading-[1.2] lg:tracking-[-1.04px] max-w-full lg:max-w-[930px]">
             Trouvez le foncier idéal pour réaliser votre projet économique
           </h1>
           <div className="flex gap-5 flex-wrap">
@@ -67,7 +67,7 @@ function HeroSearch() {
         </div>
 
         <div className="bg-white shadow-[0px_4px_12px_rgba(0,0,0,0.06)] flex flex-col gap-6 p-5 w-full">
-          <div className="flex gap-4 items-end">
+          <div className="flex flex-col gap-4 items-stretch lg:flex-row lg:items-end">
             <LocationAutocomplete
               label="Localisation"
               placeholder="Région, département, EPCI, commune"
@@ -101,12 +101,12 @@ function HeroSearch() {
               value={sector}
               onChange={setSector}
               muted={false}
-              className="w-[299px]"
+              className="w-full lg:w-[299px]"
             />
           </div>
 
-          <div className="flex gap-6 items-end">
-            <div className="flex-1 flex gap-4 items-end">
+          <div className="flex flex-col gap-4 items-stretch lg:flex-row lg:items-end lg:gap-6">
+            <div className="flex flex-col gap-4 items-stretch lg:flex-1 lg:flex-row lg:items-end">
               <div className="flex flex-col gap-2">
                 <p className="font-heading text-[12px] uppercase text-muted-blue">
                   Type d'offres
@@ -134,7 +134,7 @@ function HeroSearch() {
                 onChange={setSurface}
                 unit={surfaceUnit}
                 onUnitChange={setSurfaceUnit}
-                className="w-[168px]"
+                className="w-full lg:w-[168px]"
               />
               <div className="h-12 flex items-center">
                 <Button
@@ -147,7 +147,7 @@ function HeroSearch() {
                 </Button>
               </div>
             </div>
-            <Button variant="solid" icon={MagnifyingGlass} className="w-[201px]" onClick={handleSearch}>
+            <Button variant="solid" icon={MagnifyingGlass} className="w-full lg:w-[201px]" onClick={handleSearch}>
               Rechercher
             </Button>
           </div>
@@ -157,7 +157,7 @@ function HeroSearch() {
       <AllFiltersModal
         open={filtersOpen}
         onClose={() => setFiltersOpen(false)}
-        onApply={(filterValues) => navigate("/offres/liste", { state: filterValues })}
+        onApply={(filterValues) => navigate("/offres", { state: filterValues })}
         initialValues={{
           location,
           acquisition: { achat: forSale.acheter, location: forSale.louer },

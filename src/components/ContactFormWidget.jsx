@@ -54,7 +54,7 @@ function ContactFormWidget({
 
   return (
     <section
-      className="flex flex-col gap-4 items-end px-[114px] py-10"
+      className="flex flex-col gap-4 items-end px-4 lg:px-[114px] py-10"
       style={{
         backgroundImage:
           "linear-gradient(178deg, rgb(249, 250, 251) 1%, rgb(255, 255, 255) 99%)",
@@ -63,7 +63,7 @@ function ContactFormWidget({
       <div className="bg-white flex flex-col gap-10 items-start p-5 w-full">
         <div className="flex flex-col gap-8 w-full">
           <div className="flex flex-col gap-6 w-full">
-            <div className="font-heading leading-[1.15] tracking-[-1px] text-[40px]">
+            <div className="font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
               <p className="text-title-light">Un projet d'implémentation ?</p>
               <p className="font-bold text-brand-blue">Nos experts vous accompagnent</p>
             </div>
@@ -131,8 +131,8 @@ function ContactFormWidget({
               </Button>
             )}
             {addingSite && (
-              <div className="flex gap-4 items-end">
-                <div className="flex flex-col gap-2 w-[656px]">
+              <div className="flex flex-col gap-4 items-stretch lg:flex-row lg:items-end">
+                <div className="flex flex-col gap-2 w-full lg:w-[656px]">
                   <p className="font-heading text-[12px] uppercase text-brand-blue">
                     Saisissez l'url du site à ajouter à la demande
                   </p>

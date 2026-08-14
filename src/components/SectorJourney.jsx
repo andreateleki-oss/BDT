@@ -12,14 +12,14 @@ function SectorJourney() {
   const [sector, setSector] = useState(null)
 
   return (
-    <section className="flex gap-11 items-start px-[114px] py-10">
+    <section className="flex flex-col gap-8 items-start lg:flex-row lg:gap-11 px-4 lg:px-[114px] py-10">
       <img
         src={sectorPhoto}
         alt="Un parcours guidé par secteur d'activité"
-        className="w-[491px] h-[361px] object-cover shrink-0"
+        className="w-full h-auto lg:w-[491px] lg:h-[361px] object-cover shrink-0"
       />
       <div className="flex-1 flex flex-col gap-6">
-        <div className="font-heading leading-[1.15] tracking-[-1px] text-[40px]">
+        <div className="font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
           <p className="text-title-light">Un parcours guidé par</p>
           <p className="font-bold text-brand-blue">secteur d'activité</p>
         </div>
@@ -28,7 +28,7 @@ function SectorJourney() {
           Choisissez votre filière pour être guidé sur les démarches à
           accomplir selon les spécificités de votre projet.
         </p>
-        <div className="flex gap-4 items-end">
+        <div className="flex flex-col gap-4 items-stretch lg:flex-row lg:items-end">
           <Dropdown
             label="Secteur d'activité"
             placeholder="Votre secteur d'activité"

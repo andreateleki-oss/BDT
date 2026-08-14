@@ -54,8 +54,8 @@ function OfferDetail() {
 
         <div className="h-px bg-grey-200 w-full" />
 
-        <div className="flex gap-8 px-[114px] items-start">
-          <aside className="w-[284px] shrink-0 sticky top-24 self-start">
+        <div className="flex flex-col gap-8 items-stretch lg:flex-row lg:items-start px-4 lg:px-[114px]">
+          <aside className="hidden lg:block lg:w-[284px] shrink-0 lg:sticky lg:top-24 lg:self-start">
             <SommaireSidebar activeId={activeId} />
           </aside>
 

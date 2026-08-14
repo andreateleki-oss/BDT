@@ -9,18 +9,24 @@ function PropertySection({ titleLight = "Derniers fonciers", titleBold = "dispon
   const offers = OFFERS.slice(0, 3)
 
   return (
-    <section className="flex flex-col gap-11 items-center justify-center py-10 px-[114px]">
+    <section className="flex flex-col gap-11 items-center justify-center py-10 px-4 lg:px-[114px]">
       <CarouselHeader titleLight={titleLight} titleBold={titleBold}>
-        <Button as={Link} to="/offres/liste" variant="solid" icon={CaretRight}>
-          Voir toutes les offres
-        </Button>
+        <div className="hidden lg:block">
+          <Button as={Link} to="/offres/liste" variant="solid" icon={CaretRight}>
+            Voir toutes les offres
+          </Button>
+        </div>
       </CarouselHeader>
 
-      <div className="flex gap-16 w-full">
+      <div className="flex flex-col gap-8 lg:flex-row lg:gap-16 w-full">
         {offers.map((offer) => (
           <PropertyCard key={offer.id} to={`/offre/${offer.id}`} iconColor="text-brand-red" {...offer} />
         ))}
       </div>
+
+      <Button as={Link} to="/offres/liste" variant="solid" icon={CaretRight} className="w-full lg:hidden">
+        Voir toutes les offres
+      </Button>
     </section>
   )
 }

@@ -37,13 +37,13 @@ function GridView() {
         onFilterChange={(key, value) => setDraftFilters((f) => ({ ...f, [key]: value || null }))}
       />
 
-      <section className="flex flex-col gap-8 items-center py-[60px] px-[114px]">
+      <section className="flex flex-col gap-8 items-center py-[60px] px-4 lg:px-[114px]">
         <p className="font-heading font-medium text-[16px] tracking-[-0.44px] text-brand-blue w-full">
           {offers.length.toLocaleString("fr-FR")} offres disponibles
         </p>
 
         {pagedOffers.length > 0 ? (
-          <div className="grid grid-cols-4 gap-x-6 gap-y-8 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 w-full">
             {pagedOffers.map((offer) => (
               <PropertyCard key={offer.id} to={`/offre/${offer.id}`} compact iconColor="text-brand-red" {...offer} />
             ))}

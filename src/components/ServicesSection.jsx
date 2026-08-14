@@ -15,9 +15,9 @@ const ITEMS = [
 
 function ServicesSection() {
   return (
-    <section className="flex gap-11 items-start px-[114px] py-10">
-      <div className="w-[479px] shrink-0 flex flex-col gap-6">
-        <div className="font-heading leading-[1.15] tracking-[-1px] text-[40px]">
+    <section className="flex flex-col gap-8 items-start lg:flex-row lg:gap-11 px-4 lg:px-[114px] py-10">
+      <div className="w-full lg:w-[479px] shrink-0 flex flex-col gap-6">
+        <div className="font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
           <p className="text-title-light">Nos</p>
           <p className="font-bold text-brand-blue">Services</p>
         </div>

@@ -86,6 +86,15 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
+  useEffect(() => {
+    if (!open) return
+    function handleKeyDown(e) {
+      if (e.key === "Escape") onClose?.()
+    }
+    document.addEventListener("keydown", handleKeyDown)
+    return () => document.removeEventListener("keydown", handleKeyDown)
+  }, [open, onClose])
+
   function toggleSection(id) {
     setOpenSections((prev) => {
       const next = new Set(prev)
@@ -143,7 +152,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                 </button>
               </div>
 
-              <div className="flex flex-col gap-8 items-start w-full px-11 py-8 overflow-y-auto flex-1 min-h-0">
+              <div className="flex flex-col gap-8 items-start w-full px-4 lg:px-11 py-8 overflow-y-auto flex-1 min-h-0">
                 <AccordionSection
                   title="Localisation"
                   open={openSections.has("localisation")}

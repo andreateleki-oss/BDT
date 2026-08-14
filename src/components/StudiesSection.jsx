@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import CarouselHeader from "./ui/CarouselHeader"
 import CarouselNav from "./ui/CarouselNav"
 import ArticleCard from "./ArticleCard"
+import { useResponsivePageSize } from "../hooks/useResponsivePageSize"
 import studiesPhoto from "../assets/images/studies-photo.png"
 
 const ARTICLES = Array.from({ length: 6 }, (_, i) => ({
@@ -12,16 +13,19 @@ const ARTICLES = Array.from({ length: 6 }, (_, i) => ({
     "Analyse approfondie des dynamiques territoriales et opportunités d'implantation pour l'année à venir.",
 }))
 
-const PAGE_SIZE = 3
-const PAGES = Array.from({ length: Math.ceil(ARTICLES.length / PAGE_SIZE) }, (_, i) =>
-  ARTICLES.slice(i * PAGE_SIZE, i * PAGE_SIZE + PAGE_SIZE)
-)
-
 function StudiesSection() {
   const [page, setPage] = useState(0)
+  const pageSize = useResponsivePageSize()
+  const PAGES = Array.from({ length: Math.ceil(ARTICLES.length / pageSize) }, (_, i) =>
+    ARTICLES.slice(i * pageSize, i * pageSize + pageSize)
+  )
+
+  useEffect(() => {
+    setPage(0)
+  }, [pageSize])
 
   return (
-    <section className="flex flex-col gap-11 items-center justify-center py-10 px-[114px]">
+    <section className="flex flex-col gap-11 items-center justify-center py-10 px-4 lg:px-[114px]">
       <CarouselHeader titleLight="Études et guides de" titleBold="nos partenaires">
         <CarouselNav
           onPrev={() => setPage((p) => Math.max(0, p - 1))}
@@ -37,7 +41,7 @@ function StudiesSection() {
           style={{ transform: `translateX(-${page * 100}%)` }}
         >
           {PAGES.map((pageArticles, i) => (
-            <div key={i} className="flex gap-16 w-full shrink-0">
+            <div key={i} className="flex gap-6 lg:gap-16 w-full shrink-0">
               {pageArticles.map((article, j) => (
                 <ArticleCard key={j} {...article} />
               ))}

@@ -34,12 +34,12 @@ function OfferDetailHeader({ title = "Nom du site", onContact }) {
   const [favorited, setFavorited] = useState(false)
 
   return (
-    <section className="flex flex-col gap-11 px-[114px]">
-      <div className="flex items-center justify-between w-full">
-        <p className="font-heading text-[46px] leading-[1.01] tracking-[-1.04px] text-brand-blue">
+    <section className="flex flex-col gap-11 px-4 lg:px-[114px]">
+      <div className="flex flex-col gap-4 items-start lg:flex-row lg:items-center lg:justify-between w-full">
+        <p className="font-heading text-[28px] leading-[1.1] lg:text-[46px] lg:leading-[1.01] lg:tracking-[-1.04px] text-brand-blue">
           {title}
         </p>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center flex-wrap">
           <button
             className="bg-white border border-brand-blue rounded-sm size-12 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
             aria-label="Télécharger la fiche PDF"
@@ -59,13 +59,13 @@ function OfferDetailHeader({ title = "Nom du site", onContact }) {
         </div>
       </div>
 
-      <div className="flex gap-8 items-end w-full">
-        <div className="flex-1 grid grid-cols-2 gap-x-8 gap-y-6">
+      <div className="flex flex-col gap-8 items-stretch lg:flex-row lg:items-end w-full">
+        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
           {SUMMARY.map((item) => (
             <SummaryItem key={item.label} {...item} />
           ))}
         </div>
-        <div className="flex-1 h-[255px]">
+        <div className="flex-1 h-[220px] lg:h-[255px]">
           <img src={heroImage} alt={title} className="size-full object-cover" />
         </div>
       </div>

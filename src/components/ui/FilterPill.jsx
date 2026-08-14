@@ -8,8 +8,15 @@ function FilterPill({ label, icon: Icon, onOpenFull, options, value, renderConte
     function handleClickOutside(e) {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false)
     }
+    function handleKeyDown(e) {
+      if (e.key === "Escape") setOpen(false)
+    }
     document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
+    document.addEventListener("keydown", handleKeyDown)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+      document.removeEventListener("keydown", handleKeyDown)
+    }
   }, [])
 
   return (
@@ -26,7 +33,7 @@ function FilterPill({ label, icon: Icon, onOpenFull, options, value, renderConte
 
       {open && !onOpenFull && (
         <div
-          className={`absolute top-full left-0 mt-2 bg-white border border-grey-200 shadow-lg rounded-sm z-30 ${
+          className={`absolute top-full left-1/2 -translate-x-1/2 lg:left-0 lg:translate-x-0 mt-2 bg-white border border-grey-200 shadow-lg rounded-sm z-30 max-w-[calc(100vw-2rem)] ${
             renderContent ? `${contentWidth} p-3` : "min-w-[220px] p-4 flex flex-col gap-2"
           }`}
         >

@@ -26,13 +26,15 @@ function LotAccordionItem({ lot, open, onToggle, onExpandPlan, planImage }) {
         onClick={onToggle}
         className="bg-white flex items-center justify-between p-4 w-full text-left transition-colors hover:bg-grey-50 focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-brand-blue"
       >
-        <div className="flex-1 flex items-baseline gap-4 text-brand-blue text-[16px]">
+        <div className="flex-1 flex flex-col gap-1 lg:flex-row lg:items-baseline lg:gap-4 text-brand-blue text-[16px]">
           <p className="flex-1 font-heading font-medium leading-[1.2] tracking-[-0.44px] truncate">
             {lot.name}
           </p>
-          <p className="w-[100px] shrink-0 font-body leading-[1.5]">{lot.surface}</p>
-          <p className="w-[140px] shrink-0 font-body leading-[1.5]">{lot.disponibilite}</p>
-          <p className="w-[80px] shrink-0 font-body leading-[1.5]">{lot.type}</p>
+          <div className="flex flex-col gap-1 lg:contents">
+            <p className="shrink-0 lg:w-[100px] font-body text-[14px] lg:text-[16px] leading-[1.5]">{lot.surface}</p>
+            <p className="shrink-0 lg:w-[140px] font-body text-[14px] lg:text-[16px] leading-[1.5]">{lot.disponibilite}</p>
+            <p className="shrink-0 lg:w-[80px] font-body text-[14px] lg:text-[16px] leading-[1.5]">{lot.type}</p>
+          </div>
         </div>
         {open ? (
           <CaretUp size={20} className="text-brand-blue shrink-0" />
@@ -49,7 +51,7 @@ function LotAccordionItem({ lot, open, onToggle, onExpandPlan, planImage }) {
 
           <div className="flex flex-col gap-8">
             {INFO_ROWS(lot).map(({ icon: Icon, label, value }) => (
-              <div key={label} className="flex gap-2 items-start">
+              <div key={label} className="flex flex-col gap-2 lg:flex-row lg:items-start">
                 <div className="flex-1 flex items-center gap-2">
                   <div className="size-7 shrink-0 drop-shadow-[0px_2px_12px_rgba(91,0,2,0.16)] flex items-center justify-center">
                     <Icon size={20} className="text-brand-red" />
@@ -64,7 +66,7 @@ function LotAccordionItem({ lot, open, onToggle, onExpandPlan, planImage }) {
               </div>
             ))}
 
-            <div className="flex gap-2 items-start">
+            <div className="flex flex-col gap-2 lg:flex-row lg:items-start">
               <div className="flex-1 flex items-center gap-2">
                 <div className="size-7 shrink-0 drop-shadow-[0px_2px_12px_rgba(91,0,2,0.16)] flex items-center justify-center">
                   <FrameCorners size={20} className="text-brand-red" />

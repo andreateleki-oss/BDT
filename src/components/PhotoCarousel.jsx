@@ -6,7 +6,7 @@ function PhotoCarousel({ images }) {
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      <div className="relative w-full h-[400px] overflow-hidden">
+      <div className="relative w-full h-[240px] lg:h-[400px] overflow-hidden">
         <img src={images[index]} alt="" className="size-full object-cover" />
         <button
           onClick={() => setIndex((i) => (i - 1 + images.length) % images.length)}

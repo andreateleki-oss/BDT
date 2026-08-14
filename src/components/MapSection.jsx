@@ -32,7 +32,7 @@ function Keyword({ icon: Icon, text }) {
       <div className="bg-brand-red shadow-[0px_2px_12px_rgba(91,0,2,0.16)] size-7 flex items-center justify-center shrink-0">
         <Icon size={20} className="text-white" />
       </div>
-      <p className="font-semibold text-[20px] text-brand-blue whitespace-nowrap">
+      <p className="font-semibold text-[16px] lg:text-[20px] text-brand-blue lg:whitespace-nowrap">
         {text}
       </p>
     </div>
@@ -45,17 +45,17 @@ function MapSection() {
 
   return (
     <section
-      className="flex items-center justify-center gap-16 py-16 px-[114px]"
+      className="flex flex-col items-center gap-8 lg:flex-row lg:justify-center lg:gap-16 py-16 px-4 lg:px-[114px]"
       style={{
         backgroundImage:
           "linear-gradient(179deg, rgb(249, 250, 251) 1%, rgb(255, 255, 255) 99%)",
       }}
     >
-      <img src={franceMap} alt="Carte du foncier en France" className="w-[387px] shrink-0" />
+      <img src={franceMap} alt="Carte du foncier en France" className="w-full max-w-[387px] lg:w-[387px] shrink-0" />
 
-      <div className="flex flex-col gap-14 max-w-[610px]">
+      <div className="flex flex-col gap-14 w-full lg:max-w-[610px]">
         <div className="bg-white flex flex-col gap-6 items-start p-6 text-brand-blue">
-          <div className="font-heading leading-[1.15] tracking-[-1px] text-[40px]">
+          <div className="font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
             <p className="text-title-light">Le Foncier économique</p>
             <p className="font-bold text-brand-blue">partout en france</p>
           </div>
@@ -75,14 +75,14 @@ function MapSection() {
           </p>
         </div>
 
-        <div className="flex gap-4 items-end">
+        <div className="flex flex-col gap-4 items-stretch lg:flex-row lg:items-end">
           <Dropdown
             label="Localisation"
             options={REGIONS}
             value={region}
             onChange={setRegion}
             muted={false}
-            className="w-[296px]"
+            className="w-full lg:w-[296px]"
           />
           <button
             className="bg-brand-red text-white h-12 px-4 font-semibold text-[15px] transition-colors hover:bg-brand-red/90 active:bg-brand-red/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"

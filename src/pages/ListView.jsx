@@ -28,9 +28,9 @@ function ListView() {
         onFilterChange={(key, value) => setDraftFilters((f) => ({ ...f, [key]: value || null }))}
       />
 
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {!expanded && (
-          <div className="w-[520px] shrink-0 overflow-y-auto pt-[30px] pb-11 pl-10 pr-6 flex flex-col gap-8">
+          <div className="w-full lg:w-[520px] shrink-0 overflow-y-auto max-h-[45vh] lg:max-h-none pt-6 pb-11 px-4 lg:pt-[30px] lg:pl-10 lg:pr-6 flex flex-col gap-8">
             <p className="font-heading font-medium text-[16px] tracking-[-0.44px] text-brand-blue">
               {offers.length.toLocaleString("fr-FR")} offres disponibles
             </p>
@@ -48,7 +48,7 @@ function ListView() {
           </div>
         )}
 
-        <MapPanel onExpand={() => setExpanded((e) => !e)} className="flex-1" />
+        <MapPanel onExpand={() => setExpanded((e) => !e)} className="flex-1 min-h-[300px] lg:min-h-0" />
       </div>
 
       <AllFiltersModal

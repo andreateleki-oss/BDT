@@ -106,8 +106,15 @@ function LocationAutocomplete({ label, placeholder, value, onChange, onSelect, c
     function handleClickOutside(e) {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false)
     }
+    function handleKeyDown(e) {
+      if (e.key === "Escape") setOpen(false)
+    }
     document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
+    document.addEventListener("keydown", handleKeyDown)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+      document.removeEventListener("keydown", handleKeyDown)
+    }
   }, [])
 
   const query = value || ""

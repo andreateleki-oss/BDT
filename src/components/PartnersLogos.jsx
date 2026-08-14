@@ -15,7 +15,7 @@ function LogoStrip() {
 
 function PartnersLogos() {
   return (
-    <section className="bg-white flex items-center justify-center py-4 pb-10 px-[114px] overflow-hidden">
+    <section className="bg-white flex items-center justify-center py-4 pb-10 px-4 lg:px-[114px] overflow-hidden">
       <div className="flex w-max animate-marquee">
         <LogoStrip />
         <LogoStrip />

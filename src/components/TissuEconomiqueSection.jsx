@@ -31,9 +31,9 @@ function TissuEconomiqueSection() {
         <p className="font-heading font-medium text-[17px] leading-[1.2] text-brand-blue">
           Entreprises à proximité
         </p>
-        <div className="flex gap-24 items-center">
+        <div className="flex flex-col gap-6 items-start lg:flex-row lg:gap-24 lg:items-center">
           <img src={chartSvg} alt="Répartition des entreprises à proximité" className="size-[224px] shrink-0" />
-          <div className="flex flex-col gap-6 w-[313px]">
+          <div className="flex flex-col gap-6 w-full lg:w-[313px]">
             <p className="font-heading text-[16px] leading-[1.2] tracking-[-0.3px] text-title-light">
               + 87 entreprises dans un rayon de 5 km
             </p>
