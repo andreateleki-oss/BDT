@@ -76,12 +76,13 @@ export function toModalInitialValues(activeFilters = {}) {
 }
 
 function AllFiltersModal({ open, onClose, onApply, initialValues }) {
-  const [openSections, setOpenSections] = useState(new Set(SECTIONS))
+  const [openSections, setOpenSections] = useState(new Set())
   const [filters, setFilters] = useState(initialState)
 
   useEffect(() => {
     if (open) {
       setFilters({ ...initialState(), ...initialValues })
+      setOpenSections(new Set())
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
@@ -95,12 +96,42 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
     return () => document.removeEventListener("keydown", handleKeyDown)
   }, [open, onClose])
 
+  useEffect(() => {
+    if (!open) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [open])
+
   function toggleSection(id) {
-    setOpenSections((prev) => {
-      const next = new Set(prev)
-      next.has(id) ? next.delete(id) : next.add(id)
-      return next
-    })
+    setOpenSections((prev) => (prev.has(id) ? new Set() : new Set([id])))
+  }
+
+  function isSectionActive(id) {
+    switch (id) {
+      case "localisation":
+        return !!filters.location
+      case "acquisition":
+        return filters.acquisition.achat || filters.acquisition.location
+      case "bien":
+        return filters.bien.terrain || filters.bien.immobilier
+      case "surface":
+        return !!filters.surface && filters.surface !== "0"
+      case "secteur":
+        return !!filters.secteur
+      case "disponibilite":
+        return Object.values(filters.disponibilite).some(Boolean)
+      case "transports":
+        return Object.values(filters.transports).some((t) => t.checked)
+      case "electricite":
+        return !!filters.electriciteDistance || !!filters.puissance
+      case "label":
+        return Object.values(filters.labels).some(Boolean)
+      default:
+        return false
+    }
   }
 
   function reset() {
@@ -117,7 +148,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
       {open && (
         <>
           <motion.div
-            className="fixed inset-0 bg-brand-blue/40 z-40"
+            className="fixed inset-0 bg-brand-blue/30 backdrop-blur-[7.25px] z-40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -157,6 +188,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Localisation"
                   open={openSections.has("localisation")}
                   onToggle={() => toggleSection("localisation")}
+                  active={isSectionActive("localisation")}
                 >
                   <LocationAutocomplete
                     placeholder="Région, département, EPCI, commune"
@@ -170,6 +202,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Type d'acquisition"
                   open={openSections.has("acquisition")}
                   onToggle={() => toggleSection("acquisition")}
+                  active={isSectionActive("acquisition")}
                 >
                   <div className="flex gap-6 items-start w-full">
                     <div className="flex-1 border border-grey-200 p-2.5 flex items-center">
@@ -204,6 +237,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Type de bien"
                   open={openSections.has("bien")}
                   onToggle={() => toggleSection("bien")}
+                  active={isSectionActive("bien")}
                 >
                   <div className="flex gap-6 items-start w-full">
                     <div className="flex-1 border border-grey-200 p-2.5 flex items-center">
@@ -232,6 +266,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Surface minimale"
                   open={openSections.has("surface")}
                   onToggle={() => toggleSection("surface")}
+                  active={isSectionActive("surface")}
                 >
                   <SurfaceInput
                     value={filters.surface}
@@ -246,6 +281,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Secteur d'activité"
                   open={openSections.has("secteur")}
                   onToggle={() => toggleSection("secteur")}
+                  active={isSectionActive("secteur")}
                 >
                   <Dropdown
                     placeholder="Tout type de secteur"
@@ -260,6 +296,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Disponibilité"
                   open={openSections.has("disponibilite")}
                   onToggle={() => toggleSection("disponibilite")}
+                  active={isSectionActive("disponibilite")}
                 >
                   <div className="flex flex-col gap-6 w-full">
                     <div className="flex gap-6 items-start w-full">
@@ -322,6 +359,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Infrastructures de transports"
                   open={openSections.has("transports")}
                   onToggle={() => toggleSection("transports")}
+                  active={isSectionActive("transports")}
                 >
                   <div className="flex flex-col gap-2 w-full">
                     {[
@@ -368,6 +406,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Electricité"
                   open={openSections.has("electricite")}
                   onToggle={() => toggleSection("electricite")}
+                  active={isSectionActive("electricite")}
                 >
                   <div className="flex flex-col gap-4 w-full">
                     <Dropdown
@@ -392,6 +431,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Label"
                   open={openSections.has("label")}
                   onToggle={() => toggleSection("label")}
+                  active={isSectionActive("label")}
                 >
                   <div className="flex flex-col gap-2 w-full">
                     {LABELS.map((l) => (
