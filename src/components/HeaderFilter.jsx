@@ -3,7 +3,6 @@ import { FadersHorizontal, ArrowsClockwise, GridFour, MapTrifold } from "@phosph
 import logo from "../assets/images/logo-foncier.png"
 import Button from "./ui/Button"
 import FilterPill from "./ui/FilterPill"
-import ViewSwitch from "./ui/ViewSwitch"
 import LocationAutocomplete from "./ui/LocationAutocomplete"
 import Dropdown from "./ui/Dropdown"
 import SurfaceInput from "./ui/SurfaceInput"
@@ -208,9 +207,6 @@ function HeaderFilter({
                 </div>
               )
             })}
-          </div>
-          <div className="hidden lg:block shrink-0">
-            <ViewSwitch active={activeView} filters={appliedFilterValues ?? filterValues} />
           </div>
         </div>
 

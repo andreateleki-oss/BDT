@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom"
 import HeaderFilter from "../components/HeaderFilter"
 import OfferListItem from "../components/OfferListItem"
 import MapPanel from "../components/MapPanel"
+import ViewSwitch from "../components/ui/ViewSwitch"
 import AllFiltersModal, { toModalInitialValues } from "../components/AllFiltersModal"
 import { OFFERS, filterOffers } from "../data/offers"
 
@@ -31,9 +32,14 @@ function ListView() {
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {!expanded && (
           <div className="w-full lg:w-[520px] shrink-0 overflow-y-auto max-h-[45vh] lg:max-h-none pt-6 pb-11 px-4 lg:pt-[30px] lg:pl-10 lg:pr-6 flex flex-col gap-8">
-            <p className="font-heading font-medium text-[16px] tracking-[-0.44px] text-brand-blue">
-              {offers.length.toLocaleString("fr-FR")} offres disponibles
-            </p>
+            <div className="flex items-center justify-between w-full">
+              <p className="font-heading font-medium text-[16px] tracking-[-0.44px] text-brand-blue">
+                {offers.length.toLocaleString("fr-FR")} offres disponibles
+              </p>
+              <div className="hidden lg:block shrink-0">
+                <ViewSwitch active="carte" filters={appliedFilters} />
+              </div>
+            </div>
             {offers.length > 0 ? (
               <div className="flex flex-col gap-6">
                 {offers.map((offer) => (

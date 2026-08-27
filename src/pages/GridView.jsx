@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom"
 import HeaderFilter from "../components/HeaderFilter"
 import PropertyCard from "../components/PropertyCard"
 import Pagination from "../components/ui/Pagination"
+import ViewSwitch from "../components/ui/ViewSwitch"
 import AllFiltersModal, { toModalInitialValues } from "../components/AllFiltersModal"
 import Footer from "../components/Footer"
 import { OFFERS, filterOffers } from "../data/offers"
@@ -38,9 +39,14 @@ function GridView() {
       />
 
       <section className="flex flex-col gap-8 items-center py-[60px] px-4 lg:px-[114px]">
-        <p className="font-heading font-medium text-[16px] tracking-[-0.44px] text-brand-blue w-full">
-          {offers.length.toLocaleString("fr-FR")} offres disponibles
-        </p>
+        <div className="flex items-center justify-between w-full">
+          <p className="font-heading font-medium text-[16px] tracking-[-0.44px] text-brand-blue">
+            {offers.length.toLocaleString("fr-FR")} offres disponibles
+          </p>
+          <div className="hidden lg:block shrink-0">
+            <ViewSwitch active="grille" filters={appliedFilters} />
+          </div>
+        </div>
 
         {pagedOffers.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 w-full">
