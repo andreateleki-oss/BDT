@@ -4,7 +4,7 @@ function IconFeatureGrid({ titleLight, titleBold, description, items }) {
       <div className="flex flex-col gap-6 max-w-[956px]">
         <div className="font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
           <p className="text-title-light">{titleLight}</p>
-          <p className="font-bold text-brand-blue">{titleBold}</p>
+          <p className="font-semibold text-brand-blue">{titleBold}</p>
         </div>
         {description && (
           <p className="text-[16px] leading-[1.5] text-brand-blue max-w-[907px]">

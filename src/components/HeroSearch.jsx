@@ -10,8 +10,8 @@ import AllFiltersModal from "./AllFiltersModal"
 import heroBg from "../assets/images/hero-bg.png"
 
 const KEYWORDS = [
-  "Offres qualifiés",
-  "Accompagnement dans la recherche de foncier et l'implémentation",
+  "Offres qualifiées",
+  "Accompagnement dans la recherche de foncier et l'implantation",
 ]
 
 const SECTORS = ["Data center", "Logistique", "Industrie", "Artisanat"]
@@ -57,7 +57,9 @@ function HeroSearch() {
       <div className="flex-1 flex flex-col gap-8 lg:gap-12 relative z-10">
         <div className="flex flex-col gap-9">
           <h1 className="font-heading font-bold text-white text-[32px] leading-[1.15] lg:text-[65px] lg:leading-[1.2] lg:tracking-[-1.04px] max-w-full lg:max-w-[930px]">
-            Trouvez le foncier idéal pour réaliser votre projet économique
+            Trouvez le foncier idéal
+            <br />
+            pour réaliser votre projet économique
           </h1>
           <div className="flex gap-5 flex-wrap">
             {KEYWORDS.map((text) => (

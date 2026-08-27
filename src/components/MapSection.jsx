@@ -21,7 +21,7 @@ const REGIONS = [
 ]
 
 const KEYWORDS = [
-  { icon: Hammer, text: "Friches à réhabilité" },
+  { icon: Hammer, text: "Friches à réhabiliter" },
   { icon: Warehouse, text: "Foncier aménagé" },
   { icon: StackSimple, text: "Gisements invisibles" },
 ]
@@ -51,13 +51,13 @@ function MapSection() {
           "linear-gradient(179deg, rgb(249, 250, 251) 1%, rgb(255, 255, 255) 99%)",
       }}
     >
-      <img src={franceMap} alt="Carte du foncier en France" className="w-full max-w-[387px] lg:w-[387px] shrink-0" />
+      <img src={franceMap} alt="Carte du foncier en France" className="w-full max-w-[480px] lg:w-[480px] shrink-0" />
 
       <div className="flex flex-col gap-14 w-full lg:max-w-[610px]">
         <div className="bg-white flex flex-col gap-6 items-start p-6 text-brand-blue">
           <div className="font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
             <p className="text-title-light">Le Foncier économique</p>
-            <p className="font-bold text-brand-blue">partout en france</p>
+            <p className="font-semibold text-brand-blue">partout en France</p>
           </div>
           <p className="text-[16px] leading-[1.5] text-brand-blue">
             Plus de 1 000 sites référencés, 8 800 hectares disponibles, dans toutes les régions.

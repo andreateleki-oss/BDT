@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+:root {
+  --header-height: 150px;
+}
+
 @theme {
   --color-brand-blue: #043f54;
   --color-brand-blue-light: #085976;

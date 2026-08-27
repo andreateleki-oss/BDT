@@ -95,7 +95,7 @@ function Form() {
       <Header />
 
       <section
-        className="flex flex-col gap-4 items-end p-4 lg:p-[114px]"
+        className="flex flex-col gap-4 items-start p-4 lg:p-[114px]"
         style={{
           backgroundImage:
             "linear-gradient(178deg, rgb(249, 250, 251) 1%, rgb(255, 255, 255) 99%)",
@@ -121,8 +121,8 @@ function Form() {
           <div className="flex flex-col gap-8 w-full">
             <div className="flex flex-col gap-6 w-full">
               <div className="font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
-                <p className="text-title-light">Un projet d'implémentation ?</p>
-                <p className="font-bold text-brand-blue">Nos experts vous accompagnent</p>
+                <p className="text-title-light">Un projet d'implantation ?</p>
+                <p className="font-semibold text-brand-blue">Nos experts vous accompagnent</p>
               </div>
               <p className="text-[16px] leading-[1.5] text-brand-blue">
                 Nos experts vous recontactent sous 48h pour une première analyse gratuite de vos besoins fonciers.
@@ -248,7 +248,7 @@ function Form() {
             </div>
           </div>
 
-          <div className="flex flex-col items-end gap-2 w-full">
+          <div className="flex flex-col items-start gap-2 w-full">
             {formError && <p className="text-brand-red text-[14px]">{formError}</p>}
             <Button variant="solid" icon={Envelope} onClick={handleSend}>
               Être recontacté

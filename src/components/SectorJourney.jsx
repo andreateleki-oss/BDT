@@ -12,7 +12,7 @@ function SectorJourney() {
   const [sector, setSector] = useState(null)
 
   return (
-    <section className="flex flex-col gap-8 items-start lg:flex-row lg:gap-11 px-4 lg:px-[114px] py-10">
+    <section id="secteur-activite" className="flex flex-col gap-8 items-start lg:flex-row lg:gap-11 px-4 lg:px-[114px] py-10 scroll-mt-24">
       <img
         src={sectorPhoto}
         alt="Un parcours guidé par secteur d'activité"
@@ -21,7 +21,7 @@ function SectorJourney() {
       <div className="flex-1 flex flex-col gap-6">
         <div className="font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
           <p className="text-title-light">Un parcours guidé par</p>
-          <p className="font-bold text-brand-blue">secteur d'activité</p>
+          <p className="font-semibold text-brand-blue">secteur d'activité</p>
         </div>
         <p className="text-[16px] leading-[1.5] text-brand-blue">
           Chaque projet a ses propres contraintes, ses propres échéances.

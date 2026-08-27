@@ -7,6 +7,9 @@ import DescriptifSection from "../components/DescriptifSection"
 import PhotoCarousel from "../components/PhotoCarousel"
 import EnvironnementSection from "../components/EnvironnementSection"
 import LotsSection from "../components/LotsSection"
+import ReseauxSection from "../components/ReseauxSection"
+import SecuriteIncendieSection from "../components/SecuriteIncendieSection"
+import InfrastructuresTransportSection from "../components/InfrastructuresTransportSection"
 import TissuEconomiqueSection from "../components/TissuEconomiqueSection"
 import SpecificiteSection from "../components/SpecificiteSection"
 import ContactFormWidget from "../components/ContactFormWidget"
@@ -55,7 +58,7 @@ function OfferDetail() {
         <div className="h-px bg-grey-200 w-full" />
 
         <div className="flex flex-col gap-8 items-stretch lg:flex-row lg:items-start px-4 lg:px-[114px]">
-          <aside className="hidden lg:block lg:w-[284px] shrink-0 lg:sticky lg:top-24 lg:self-start">
+          <aside className="hidden lg:block lg:w-[284px] shrink-0 lg:sticky lg:top-[calc(var(--header-height)+24px)] lg:self-start">
             <SommaireSidebar activeId={activeId} />
           </aside>
 
@@ -75,6 +78,15 @@ function OfferDetail() {
             <div className="h-px bg-grey-200 w-full" />
 
             <LotsSection />
+            <div className="h-px bg-grey-200 w-full" />
+
+            <ReseauxSection />
+            <div className="h-px bg-grey-200 w-full" />
+
+            <SecuriteIncendieSection />
+            <div className="h-px bg-grey-200 w-full" />
+
+            <InfrastructuresTransportSection />
             <div className="h-px bg-grey-200 w-full" />
 
             <TissuEconomiqueSection />

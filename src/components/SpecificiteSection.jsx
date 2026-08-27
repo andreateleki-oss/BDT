@@ -11,18 +11,6 @@ function SpecificiteSection() {
   return (
     <section id="specificite" className="flex flex-col gap-6 w-full scroll-mt-24 text-brand-blue">
       <p className="font-body font-semibold text-[20px] leading-[22.5px]">Spécificités du site</p>
-      <div className="text-[16px] leading-[1.5]">
-        <p>
-          Le site est situé à équidistance de grands pôles économiques franciliens qui sont
-          Paris, Évry-Courcouronnes, Créteil, Massy et Rungis.
-        </p>
-        <p>&nbsp;</p>
-        <p>
-          Le territoire accueil plusieurs lycées, notamment ceux rattachés à la plateforme
-          aéroportuaire d'Orly, qui propose des formations en Bac pro Aéronautique (options
-          structure, système ou avionique), en alternance en professionnalisation.
-        </p>
-      </div>
 
       <div className="flex flex-col gap-8">
         {ROWS.map(({ icon: Icon, label, value }) => (

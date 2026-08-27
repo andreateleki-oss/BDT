@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom"
-import { Globe, CaretDown, FadersHorizontal, ArrowsClockwise, GridFour, MapTrifold } from "@phosphor-icons/react"
+import { Link, useNavigate } from "react-router-dom"
+import { FadersHorizontal, ArrowsClockwise, GridFour, MapTrifold } from "@phosphor-icons/react"
 import logo from "../assets/images/logo-foncier.png"
 import Button from "./ui/Button"
 import FilterPill from "./ui/FilterPill"
@@ -8,22 +8,23 @@ import LocationAutocomplete from "./ui/LocationAutocomplete"
 import Dropdown from "./ui/Dropdown"
 import SurfaceInput from "./ui/SurfaceInput"
 import Checkbox from "./ui/Checkbox"
+import LanguageSelector from "./ui/LanguageSelector"
 
 const NAV_LINKS = [
-  "Secteur d'activité",
-  "Rechercher un terrain",
-  "Nos services",
-  "Nous contacter",
+  { label: "Secteur d'activité", sectionId: "secteur-activite" },
+  { label: "Rechercher un terrain", to: "/offres" },
+  { label: "Nos services", sectionId: "services" },
+  { label: "Nous contacter", to: "/formulaire" },
 ]
 
 const SECTORS = ["Data center", "Logistique", "Industrie", "Artisanat"]
 
 const FILTERS = [
-  { key: "typeImplementation", label: "Type d'implémentation" },
   { key: "localisation", label: "Localisation" },
+  { key: "typeImplementation", label: "Type d'acquisition" },
   { key: "secteur", label: "Secteur d'activité" },
-  { key: "typeOffre", label: "Type d'offre" },
-  { key: "surface", label: "Surface" },
+  { key: "typeOffre", label: "Type d'offres" },
+  { key: "surface", label: "Surface minimale" },
 ]
 
 function displayTypeImplementation(v) {
@@ -49,6 +50,15 @@ function HeaderFilter({
   hasPendingChanges = false,
   onRefresh,
 }) {
+  const navigate = useNavigate()
+
+  function handleSectionClick(sectionId) {
+    return (e) => {
+      e.preventDefault()
+      navigate("/", { state: { scrollTo: sectionId } })
+    }
+  }
+
   function renderFilterWidget(key, close) {
     switch (key) {
       case "localisation":
@@ -135,11 +145,7 @@ function HeaderFilter({
           <Button variant="outline" className="!h-auto !py-1 !px-4 text-[14px]">
             Mon compte
           </Button>
-          <button className="flex items-center gap-2 px-4 py-1 text-brand-blue font-accent font-semibold underline rounded-sm transition-colors hover:text-brand-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue">
-            <Globe size={20} />
-            FR
-            <CaretDown size={20} />
-          </button>
+          <LanguageSelector />
         </div>
         <div className="h-px bg-grey-200 mt-4" />
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-3 lg:px-10 lg:py-0">
@@ -153,14 +159,19 @@ function HeaderFilter({
             {NAV_LINKS.map((link) => {
               const className =
                 "h-12 flex items-center rounded-sm transition-opacity hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
-              return link === "Rechercher un terrain" ? (
-                <Link key={link} to="/offres" className={className}>
-                  {link}
-                </Link>
-              ) : (
-                <a key={link} href="#" className={className}>
-                  {link}
+              return link.sectionId ? (
+                <a
+                  key={link.label}
+                  href="#"
+                  onClick={handleSectionClick(link.sectionId)}
+                  className={className}
+                >
+                  {link.label}
                 </a>
+              ) : (
+                <Link key={link.label} to={link.to} className={className}>
+                  {link.label}
+                </Link>
               )
             })}
           </nav>
@@ -174,7 +185,7 @@ function HeaderFilter({
               onClick={onOpenAllFilters}
               className="h-6 flex items-center gap-1 px-2 border border-brand-blue rounded-full text-[14px] font-semibold text-brand-blue transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue shrink-0"
             >
-              Filters
+              Filtres
               <FadersHorizontal size={20} />
             </button>
             {FILTERS.map((f) => {

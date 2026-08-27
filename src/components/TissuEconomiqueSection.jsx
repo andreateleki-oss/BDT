@@ -14,17 +14,17 @@ function TissuEconomiqueSection() {
         <p className="font-body font-semibold text-[20px] leading-[22.5px]">
           Tissu économique et formations
         </p>
-        <div className="text-[16px] leading-[1.5]">
-          <p>
+        <ul className="list-disc pl-5 text-[16px] leading-[1.5]">
+          <li>
             Le site est situé à équidistance de grands pôles économiques franciliens qui sont
             Paris, Évry-Courcouronnes, Créteil, Massy et Rungis.
-          </p>
-          <p>
+          </li>
+          <li>
             Le territoire accueil plusieurs lycées, notamment ceux rattachés à la plateforme
             aéroportuaire d'Orly, qui propose des formations en Bac pro Aéronautique (options
             structure, système ou avionique), en alternance en professionnalisation.
-          </p>
-        </div>
+          </li>
+        </ul>
       </div>
 
       <div className="bg-grey-50 p-6 flex flex-col gap-6 w-full">

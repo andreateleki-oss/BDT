@@ -15,11 +15,11 @@ const ITEMS = [
 
 function ServicesSection() {
   return (
-    <section className="flex flex-col gap-8 items-start lg:flex-row lg:gap-11 px-4 lg:px-[114px] py-10">
+    <section id="services" className="flex flex-col gap-8 items-start lg:flex-row lg:gap-11 px-4 lg:px-[114px] py-10 scroll-mt-24">
       <div className="w-full lg:w-[479px] shrink-0 flex flex-col gap-6">
         <div className="font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
           <p className="text-title-light">Nos</p>
-          <p className="font-bold text-brand-blue">Services</p>
+          <p className="font-semibold text-brand-blue">Services</p>
         </div>
         <p className="text-[16px] leading-[1.5] text-brand-blue">
           Chaque projet a ses propres contraintes, ses propres échéances.

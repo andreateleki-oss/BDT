@@ -234,7 +234,22 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                 <div className="h-px bg-grey-200 w-full" />
 
                 <AccordionSection
-                  title="Type de bien"
+                  title="Secteur d'activité"
+                  open={openSections.has("secteur")}
+                  onToggle={() => toggleSection("secteur")}
+                  active={isSectionActive("secteur")}
+                >
+                  <Dropdown
+                    placeholder="Tout type de secteur"
+                    options={SECTORS}
+                    value={filters.secteur}
+                    onChange={(v) => setFilters((f) => ({ ...f, secteur: v }))}
+                  />
+                </AccordionSection>
+                <div className="h-px bg-grey-200 w-full" />
+
+                <AccordionSection
+                  title="Type d'offres"
                   open={openSections.has("bien")}
                   onToggle={() => toggleSection("bien")}
                   active={isSectionActive("bien")}
@@ -273,21 +288,6 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                     onChange={(v) => setFilters((f) => ({ ...f, surface: v }))}
                     unit={filters.surfaceUnit}
                     onUnitChange={(u) => setFilters((f) => ({ ...f, surfaceUnit: u }))}
-                  />
-                </AccordionSection>
-                <div className="h-px bg-grey-200 w-full" />
-
-                <AccordionSection
-                  title="Secteur d'activité"
-                  open={openSections.has("secteur")}
-                  onToggle={() => toggleSection("secteur")}
-                  active={isSectionActive("secteur")}
-                >
-                  <Dropdown
-                    placeholder="Tout type de secteur"
-                    options={SECTORS}
-                    value={filters.secteur}
-                    onChange={(v) => setFilters((f) => ({ ...f, secteur: v }))}
                   />
                 </AccordionSection>
                 <div className="h-px bg-grey-200 w-full" />
