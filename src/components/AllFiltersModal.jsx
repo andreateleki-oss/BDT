@@ -8,6 +8,7 @@ import LocationAutocomplete from "./ui/LocationAutocomplete"
 import SurfaceInput from "./ui/SurfaceInput"
 import DistanceDropdown from "./ui/DistanceDropdown"
 import LabelInfoBox from "./ui/LabelInfoBox"
+import Button from "./ui/Button"
 
 const SECTIONS = [
   "localisation",
@@ -43,10 +44,10 @@ function initialState() {
     secteur: null,
     disponibilite: { immediate: false, m0_6: false, m6_12: false, plus12: false },
     transports: {
-      autoroute: { checked: false, distance: null },
-      gare: { checked: false, distance: null },
-      port: { checked: false, distance: null },
-      aeroport: { checked: false, distance: null },
+      autoroute: { checked: false, distance: "moins de 5 km" },
+      gare: { checked: false, distance: "moins de 10 km" },
+      port: { checked: false, distance: "moins de 30 km" },
+      aeroport: { checked: false, distance: "moins de 30 km" },
     },
     electriciteDistance: null,
     puissance: null,
@@ -61,6 +62,11 @@ function computeFilterValues(filters) {
     typeImplementation: { ...filters.acquisition },
     typeOffre: { ...filters.bien },
     surface: filters.surface && filters.surface !== "0" ? { value: filters.surface, unit: filters.surfaceUnit } : null,
+    disponibilite: filters.disponibilite,
+    transports: filters.transports,
+    electriciteDistance: filters.electriciteDistance,
+    puissance: filters.puissance,
+    labels: filters.labels,
   }
 }
 
@@ -72,6 +78,16 @@ export function toModalInitialValues(activeFilters = {}) {
     bien: activeFilters.typeOffre || { terrain: false, immobilier: false },
     surface: activeFilters.surface?.value || "0",
     surfaceUnit: activeFilters.surface?.unit || "Ha",
+    disponibilite: activeFilters.disponibilite || { immediate: false, m0_6: false, m6_12: false, plus12: false },
+    transports: activeFilters.transports || {
+      autoroute: { checked: false, distance: "moins de 5 km" },
+      gare: { checked: false, distance: "moins de 10 km" },
+      port: { checked: false, distance: "moins de 30 km" },
+      aeroport: { checked: false, distance: "moins de 30 km" },
+    },
+    electriciteDistance: activeFilters.electriciteDistance ?? null,
+    puissance: activeFilters.puissance ?? null,
+    labels: activeFilters.labels || {},
   }
 }
 
@@ -109,28 +125,28 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
     setOpenSections((prev) => (prev.has(id) ? new Set() : new Set([id])))
   }
 
-  function isSectionActive(id) {
+  function getSectionCount(id) {
     switch (id) {
       case "localisation":
-        return !!filters.location
+        return filters.location ? 1 : 0
       case "acquisition":
-        return filters.acquisition.achat || filters.acquisition.location
+        return [filters.acquisition.achat, filters.acquisition.location].filter(Boolean).length
       case "bien":
-        return filters.bien.terrain || filters.bien.immobilier
+        return [filters.bien.terrain, filters.bien.immobilier].filter(Boolean).length
       case "surface":
-        return !!filters.surface && filters.surface !== "0"
+        return filters.surface && filters.surface !== "0" ? 1 : 0
       case "secteur":
-        return !!filters.secteur
+        return filters.secteur ? 1 : 0
       case "disponibilite":
-        return Object.values(filters.disponibilite).some(Boolean)
+        return Object.values(filters.disponibilite).filter(Boolean).length
       case "transports":
-        return Object.values(filters.transports).some((t) => t.checked)
+        return Object.values(filters.transports).filter((t) => t.checked).length
       case "electricite":
-        return !!filters.electriciteDistance || !!filters.puissance
+        return [filters.electriciteDistance, filters.puissance].filter(Boolean).length
       case "label":
-        return Object.values(filters.labels).some(Boolean)
+        return Object.values(filters.labels).filter(Boolean).length
       default:
-        return false
+        return 0
     }
   }
 
@@ -138,8 +154,17 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
     setFilters(initialState())
   }
 
+  function getAdvancedCount() {
+    return (
+      getSectionCount("disponibilite") +
+      getSectionCount("transports") +
+      getSectionCount("electricite") +
+      getSectionCount("label")
+    )
+  }
+
   function handleApply() {
-    onApply?.(computeFilterValues(filters))
+    onApply?.(computeFilterValues(filters), getAdvancedCount())
     onClose()
   }
 
@@ -160,35 +185,31 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.2 }}
+            onClick={onClose}
           >
-            <div className="bg-white w-[661px] max-w-full max-h-[85vh] flex flex-col items-center overflow-hidden">
-              <div className="border-b border-grey-200 flex items-center px-6 py-4 w-full shrink-0">
-                <div className="flex-1">
-                  <button
-                    onClick={onClose}
-                    aria-label="Fermer"
-                    className="rounded-sm p-1 -m-1 transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
-                  >
-                    <X size={20} className="text-brand-blue" />
-                  </button>
-                </div>
-                <p className="flex-1 font-heading font-medium text-[16px] tracking-[-0.44px] text-brand-blue text-center">
-                  Tous les filtres
+            <div
+              className="bg-white w-[661px] max-w-full max-h-[85vh] flex flex-col items-center overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="border-b border-grey-200 flex items-center justify-between px-6 py-4 w-full shrink-0">
+                <p className="font-heading font-semibold text-[22px] tracking-[-0.44px] text-brand-blue">
+                  Ajouter des filtres
                 </p>
                 <button
-                  onClick={reset}
-                  className="flex-1 text-[16px] text-grey text-right rounded-sm transition-colors hover:text-brand-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+                  onClick={onClose}
+                  className="flex items-center gap-1 text-[15px] font-medium text-brand-blue rounded-sm transition-colors hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
                 >
-                  Réinitialiser
+                  Fermer
+                  <X size={18} />
                 </button>
               </div>
 
-              <div className="flex flex-col gap-8 items-start w-full px-4 lg:px-11 py-8 overflow-y-auto flex-1 min-h-0">
+              <div className="flex flex-col gap-5 items-start w-full px-4 lg:px-11 py-6 overflow-y-auto flex-1 min-h-0">
                 <AccordionSection
                   title="Localisation"
                   open={openSections.has("localisation")}
                   onToggle={() => toggleSection("localisation")}
-                  active={isSectionActive("localisation")}
+                  count={getSectionCount("localisation")}
                 >
                   <LocationAutocomplete
                     placeholder="Région, département, EPCI, commune"
@@ -202,10 +223,10 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Type d'acquisition"
                   open={openSections.has("acquisition")}
                   onToggle={() => toggleSection("acquisition")}
-                  active={isSectionActive("acquisition")}
+                  count={getSectionCount("acquisition")}
                 >
                   <div className="flex gap-6 items-start w-full">
-                    <div className="flex-1 border border-grey-200 p-2.5 flex items-center">
+                    <div className="flex-1 flex items-center">
                       <Checkbox
                         label="Achat"
                         checked={filters.acquisition.achat}
@@ -217,7 +238,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                         }
                       />
                     </div>
-                    <div className="flex-1 border border-grey-200 p-2.5 flex items-center">
+                    <div className="flex-1 flex items-center">
                       <Checkbox
                         label="Location"
                         checked={filters.acquisition.location}
@@ -237,13 +258,14 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Secteur d'activité"
                   open={openSections.has("secteur")}
                   onToggle={() => toggleSection("secteur")}
-                  active={isSectionActive("secteur")}
+                  count={getSectionCount("secteur")}
                 >
                   <Dropdown
                     placeholder="Tout type de secteur"
                     options={SECTORS}
                     value={filters.secteur}
                     onChange={(v) => setFilters((f) => ({ ...f, secteur: v }))}
+                    allLabel="Tous les secteurs"
                   />
                 </AccordionSection>
                 <div className="h-px bg-grey-200 w-full" />
@@ -252,10 +274,10 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Type d'offres"
                   open={openSections.has("bien")}
                   onToggle={() => toggleSection("bien")}
-                  active={isSectionActive("bien")}
+                  count={getSectionCount("bien")}
                 >
                   <div className="flex gap-6 items-start w-full">
-                    <div className="flex-1 border border-grey-200 p-2.5 flex items-center">
+                    <div className="flex-1 flex items-center">
                       <Checkbox
                         label="Terrain"
                         checked={filters.bien.terrain}
@@ -264,7 +286,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                         }
                       />
                     </div>
-                    <div className="flex-1 border border-grey-200 p-2.5 flex items-center">
+                    <div className="flex-1 flex items-center">
                       <Checkbox
                         label="Immobilier"
                         checked={filters.bien.immobilier}
@@ -281,7 +303,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Surface minimale"
                   open={openSections.has("surface")}
                   onToggle={() => toggleSection("surface")}
-                  active={isSectionActive("surface")}
+                  count={getSectionCount("surface")}
                 >
                   <SurfaceInput
                     value={filters.surface}
@@ -296,11 +318,11 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Disponibilité"
                   open={openSections.has("disponibilite")}
                   onToggle={() => toggleSection("disponibilite")}
-                  active={isSectionActive("disponibilite")}
+                  count={getSectionCount("disponibilite")}
                 >
                   <div className="flex flex-col gap-6 w-full">
                     <div className="flex gap-6 items-start w-full">
-                      <div className="flex-1 border border-grey-200 p-2.5 flex items-center">
+                      <div className="flex-1 flex items-center">
                         <Checkbox
                           label="Immédiate"
                           checked={filters.disponibilite.immediate}
@@ -312,7 +334,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                           }
                         />
                       </div>
-                      <div className="flex-1 border border-grey-200 p-2.5 flex items-center">
+                      <div className="flex-1 flex items-center">
                         <Checkbox
                           label="0 à 6 mois"
                           checked={filters.disponibilite.m0_6}
@@ -326,7 +348,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                       </div>
                     </div>
                     <div className="flex gap-6 items-start w-full">
-                      <div className="flex-1 border border-grey-200 p-2.5 flex items-center">
+                      <div className="flex-1 flex items-center">
                         <Checkbox
                           label="6 à 12 mois"
                           checked={filters.disponibilite.m6_12}
@@ -338,7 +360,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                           }
                         />
                       </div>
-                      <div className="flex-1 border border-grey-200 p-2.5 flex items-center">
+                      <div className="flex-1 flex items-center">
                         <Checkbox
                           label="plus de 12 mois"
                           checked={filters.disponibilite.plus12}
@@ -359,7 +381,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Infrastructures de transports"
                   open={openSections.has("transports")}
                   onToggle={() => toggleSection("transports")}
-                  active={isSectionActive("transports")}
+                  count={getSectionCount("transports")}
                 >
                   <div className="flex flex-col gap-2 w-full">
                     {[
@@ -368,34 +390,35 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                       { key: "port", label: "Port Maritime", options: SHORT_OPTIONS, placeholder: "moins de 30 km" },
                       { key: "aeroport", label: "Aéroport / Aérodrome", options: SHORT_OPTIONS, placeholder: "moins de 30 km" },
                     ].map(({ key, label, options, placeholder }) => (
-                      <div
-                        key={key}
-                        className="border border-grey-200 h-12 flex items-center justify-between px-[17px]"
-                      >
-                        <Checkbox
-                          label={label}
-                          checked={filters.transports[key].checked}
-                          onChange={() =>
-                            setFilters((f) => ({
-                              ...f,
-                              transports: {
-                                ...f.transports,
-                                [key]: { ...f.transports[key], checked: !f.transports[key].checked },
-                              },
-                            }))
-                          }
-                        />
-                        <DistanceDropdown
-                          options={options}
-                          value={filters.transports[key].distance}
-                          placeholder={placeholder}
-                          onChange={(v) =>
-                            setFilters((f) => ({
-                              ...f,
-                              transports: { ...f.transports, [key]: { ...f.transports[key], distance: v } },
-                            }))
-                          }
-                        />
+                      <div key={key} className="flex gap-3 items-center w-full">
+                        <div className="flex-1 flex items-center">
+                          <Checkbox
+                            label={label}
+                            checked={filters.transports[key].checked}
+                            onChange={() =>
+                              setFilters((f) => ({
+                                ...f,
+                                transports: {
+                                  ...f.transports,
+                                  [key]: { ...f.transports[key], checked: !f.transports[key].checked },
+                                },
+                              }))
+                            }
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <DistanceDropdown
+                            options={options}
+                            value={filters.transports[key].distance}
+                            placeholder={placeholder}
+                            onChange={(v) =>
+                              setFilters((f) => ({
+                                ...f,
+                                transports: { ...f.transports, [key]: { ...f.transports[key], distance: v } },
+                              }))
+                            }
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -406,7 +429,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Electricité"
                   open={openSections.has("electricite")}
                   onToggle={() => toggleSection("electricite")}
-                  active={isSectionActive("electricite")}
+                  count={getSectionCount("electricite")}
                 >
                   <div className="flex flex-col gap-4 w-full">
                     <Dropdown
@@ -415,6 +438,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                       options={["moins de 5 km", "moins de 10 km", "moins de 20 km", "plus de 20 km"]}
                       value={filters.electriciteDistance}
                       onChange={(v) => setFilters((f) => ({ ...f, electriciteDistance: v }))}
+                      allLabel="Toutes les distances"
                     />
                     <Dropdown
                       label="Puissance recherchée"
@@ -422,6 +446,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                       options={["< 5 MW", "5 à 20 MW", "20 à 50 MW", "> 50 MW"]}
                       value={filters.puissance}
                       onChange={(v) => setFilters((f) => ({ ...f, puissance: v }))}
+                      allLabel="Toutes les puissances"
                     />
                   </div>
                 </AccordionSection>
@@ -431,7 +456,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                   title="Label"
                   open={openSections.has("label")}
                   onToggle={() => toggleSection("label")}
-                  active={isSectionActive("label")}
+                  count={getSectionCount("label")}
                 >
                   <div className="flex flex-col gap-2 w-full">
                     {LABELS.map((l) => (
@@ -452,13 +477,13 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                 </AccordionSection>
               </div>
 
-              <div className="border-t border-grey-200 flex items-center justify-center py-4 w-full shrink-0">
-                <button
-                  onClick={handleApply}
-                  className="bg-brand-red text-white h-12 px-4 font-semibold text-[14px] transition-colors hover:bg-brand-red/90 active:bg-brand-red/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
-                >
-                  Voir les résultats
-                </button>
+              <div className="border-t border-grey-200 flex items-center justify-center gap-3 py-4 w-full shrink-0">
+                <Button variant="outline" onClick={reset}>
+                  Réinitialiser
+                </Button>
+                <Button variant="solid" onClick={handleApply}>
+                  Appliquer
+                </Button>
               </div>
             </div>
           </motion.div>

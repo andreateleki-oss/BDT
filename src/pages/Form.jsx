@@ -5,6 +5,7 @@ import Header from "../components/Header"
 import Footer from "../components/Footer"
 import Button from "../components/ui/Button"
 import Dropdown from "../components/ui/Dropdown"
+import Breadcrumb from "../components/ui/Breadcrumb"
 import { REQUEST_TYPES } from "../components/ContactFormWidget"
 
 const SECTORS = ["Data center", "Logistique", "Industrie", "Artisanat"]
@@ -14,7 +15,7 @@ function RequestTypeChip({ label, active, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`h-8 flex items-center px-2 rounded-full text-[14px] font-semibold border border-brand-blue transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
+      className={`h-[30px] flex items-center px-4 rounded-full text-[15px] font-semibold border border-brand-blue transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
         active ? "bg-brand-blue text-white hover:bg-brand-blue/90" : "bg-white text-brand-blue hover:bg-brand-blue/5"
       }`}
     >
@@ -23,16 +24,19 @@ function RequestTypeChip({ label, active, onClick }) {
   )
 }
 
-function LabeledInput({ label, placeholder, value, onChange, type = "text" }) {
+function LabeledInput({ label, placeholder, value, onChange, type = "text", required = false }) {
   return (
     <div className="flex flex-col gap-2 flex-1">
-      <p className="font-heading text-[12px] uppercase text-brand-blue">{label}</p>
+      <p className="font-heading text-[12px] uppercase text-brand-blue">
+        {label}
+        {required && <span className="text-brand-red"> *</span>}
+      </p>
       {type === "textarea" ? (
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="bg-grey-50 border border-grey-200 h-[120px] px-[17px] py-[13px] text-[15px] text-brand-blue placeholder:text-grey w-full resize-none transition-colors focus:border-brand-blue outline-none"
+          className="bg-white border border-grey-200 h-[120px] px-[17px] py-[13px] text-[15px] text-brand-blue placeholder:text-grey w-full resize-none transition-colors focus:border-brand-blue outline-none"
         />
       ) : (
         <input
@@ -40,7 +44,7 @@ function LabeledInput({ label, placeholder, value, onChange, type = "text" }) {
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="bg-grey-50 border border-grey-200 h-12 px-[17px] text-[15px] text-brand-blue placeholder:text-grey w-full transition-colors focus:border-brand-blue outline-none"
+          className="bg-white border border-grey-200 h-12 px-[17px] text-[15px] text-brand-blue placeholder:text-grey w-full transition-colors focus:border-brand-blue outline-none"
         />
       )}
     </div>
@@ -95,12 +99,15 @@ function Form() {
       <Header />
 
       <section
-        className="flex flex-col gap-4 items-start p-4 lg:p-[114px]"
+        className="w-full"
         style={{
           backgroundImage:
             "linear-gradient(178deg, rgb(249, 250, 251) 1%, rgb(255, 255, 255) 99%)",
         }}
       >
+      <div className="flex flex-col gap-4 items-start p-4 lg:px-[114px] lg:pb-[114px] lg:pt-11 max-w-[1400px] mx-auto">
+        <Breadcrumb items={[{ label: "Accueil", to: "/" }, { label: "Nous contacter" }]} />
+
         {submitted ? (
           <div className="bg-white flex flex-col gap-6 items-center justify-center p-8 lg:p-20 w-full">
             <CheckCircle size={64} weight="fill" className="text-brand-blue" />
@@ -178,14 +185,14 @@ function Form() {
                 </div>
               )}
               {sites.length < MAX_SITES && !addingSite && (
-                <Button
-                  variant="link"
-                  icon={PlusSquare}
-                  iconPosition="left"
+                <button
+                  type="button"
                   onClick={() => setAddingSite(true)}
+                  className="flex items-center gap-2 h-12 px-[17px] w-full max-w-[656px] border border-dashed border-grey-300 text-brand-blue font-accent font-semibold transition-colors hover:bg-grey-50 hover:text-brand-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
                 >
-                  Ajouter un site à la demande
-                </Button>
+                  <PlusSquare size={20} />
+                  <span className="underline underline-offset-2">Ajouter un site à la demande</span>
+                </button>
               )}
               {addingSite && (
                 <div className="flex flex-col gap-4 items-stretch lg:flex-row lg:items-end">
@@ -198,7 +205,7 @@ function Form() {
                       value={siteUrl}
                       onChange={(e) => setSiteUrl(e.target.value)}
                       placeholder="http://url.du.site"
-                      className="bg-grey-50 border border-grey-200 h-12 px-[17px] text-[15px] text-brand-blue placeholder:text-grey w-full transition-colors focus:border-brand-blue outline-none"
+                      className="bg-white border border-grey-200 h-12 px-[17px] text-[15px] text-brand-blue placeholder:text-grey w-full transition-colors focus:border-brand-blue outline-none"
                     />
                   </div>
                   <Button variant="solid" icon={Check} onClick={handleValidateSite}>
@@ -225,17 +232,19 @@ function Form() {
                   options={SECTORS}
                   value={secteur}
                   onChange={setSecteur}
+                  allLabel="Tous les secteurs"
                   className="flex-1"
                 />
               </div>
               <div className="flex flex-col gap-6 lg:flex-row lg:gap-10 w-full">
-                <LabeledInput label="NOM" placeholder="Patrick George" value={nom} onChange={setNom} />
+                <LabeledInput label="NOM" placeholder="Patrick George" value={nom} onChange={setNom} required />
                 <LabeledInput
                   label="EMAIL"
                   placeholder="adresse@email.com"
                   value={email}
                   onChange={setEmail}
                   type="email"
+                  required
                 />
               </div>
               <LabeledInput
@@ -244,11 +253,15 @@ function Form() {
                 value={message}
                 onChange={setMessage}
                 type="textarea"
+                required
               />
             </div>
           </div>
 
           <div className="flex flex-col items-start gap-2 w-full">
+            <p className="text-[14px] text-grey-600">
+              <span className="text-brand-red">*</span> Champs obligatoires
+            </p>
             {formError && <p className="text-brand-red text-[14px]">{formError}</p>}
             <Button variant="solid" icon={Envelope} onClick={handleSend}>
               Être recontacté
@@ -263,6 +276,7 @@ function Form() {
             Données protégées - Réponse sous 48h garantie
           </p>
         </div>
+      </div>
       </section>
 
       <Footer />

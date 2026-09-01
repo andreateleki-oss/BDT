@@ -1,6 +1,6 @@
 function DescriptifSection() {
   return (
-    <section id="descriptif" className="flex flex-col gap-6 w-full scroll-mt-24 text-brand-blue">
+    <section id="descriptif" className="flex flex-col gap-6 w-full scroll-mt-[calc(var(--header-height)+16px)] text-brand-blue">
       <p className="font-body font-semibold text-[20px] leading-[22.5px]">Description du site</p>
       <ul className="list-disc pl-5 text-[16px] leading-[1.5]">
         <li>Ancien site de production de 4 200 m2 sur parcelle de 1,2 ha</li>

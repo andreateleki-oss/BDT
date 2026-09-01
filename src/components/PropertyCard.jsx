@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { MapPin, ArrowsOut, Toolbox, Handshake } from "@phosphor-icons/react"
+import { MapPin, ArrowsOut, Toolbox, Handshake, CaretRight } from "@phosphor-icons/react"
 
 function PropertyCard({
   image,
@@ -18,9 +18,9 @@ function PropertyCard({
   return (
     <Wrapper
       to={to}
-      className="flex-1 flex flex-col gap-6 group rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+      className="flex-1 flex flex-col gap-3 group rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
     >
-      <div className="relative aspect-square w-full overflow-hidden">
+      <div className="relative aspect-video w-full overflow-hidden">
         <img
           src={image}
           alt={title}
@@ -60,6 +60,14 @@ function PropertyCard({
             <p className={`text-grey-600 ${compact ? "text-[14px]" : "text-[16px]"}`}>{sector}</p>
           </div>
         </div>
+        <span
+          className={`inline-flex items-center gap-2 text-brand-blue font-accent font-semibold underline underline-offset-2 transition-colors group-hover:text-brand-red ${
+            compact ? "text-[14px]" : "text-[16px]"
+          }`}
+        >
+          Voir l'offre
+          <CaretRight size={compact ? 16 : 20} />
+        </span>
       </div>
     </Wrapper>
   )

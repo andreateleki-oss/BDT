@@ -1,11 +1,10 @@
 function IconFeatureGrid({ titleLight, titleBold, description, items }) {
   return (
-    <section className="flex flex-col gap-11 items-start py-10 px-4 lg:px-[114px]">
+    <section className="flex flex-col gap-11 items-start py-10 px-4 lg:px-[114px] max-w-[1400px] mx-auto">
       <div className="flex flex-col gap-6 max-w-[956px]">
-        <div className="font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
-          <p className="text-title-light">{titleLight}</p>
-          <p className="font-semibold text-brand-blue">{titleBold}</p>
-        </div>
+        <p className="font-heading font-semibold text-[22px] lg:text-[26px] leading-[1.2] tracking-[-0.3px] text-brand-blue">
+          {titleLight} {titleBold}
+        </p>
         {description && (
           <p className="text-[16px] leading-[1.5] text-brand-blue max-w-[907px]">
             {description}

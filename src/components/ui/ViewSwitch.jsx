@@ -7,7 +7,7 @@ function ViewSwitch({ active, filters }) {
       <Link
         to="/offres"
         state={filters}
-        className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[14px] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
+        className={`flex items-center gap-1 px-4 py-1 rounded-full text-[15px] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
           active === "grille" ? "bg-brand-blue text-white" : "text-brand-blue hover:bg-brand-blue/10"
         }`}
       >
@@ -17,7 +17,7 @@ function ViewSwitch({ active, filters }) {
       <Link
         to="/offres/liste"
         state={filters}
-        className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[14px] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
+        className={`flex items-center gap-1 px-4 py-1 rounded-full text-[15px] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
           active === "carte" ? "bg-brand-blue text-white" : "text-brand-blue hover:bg-brand-blue/10"
         }`}
       >

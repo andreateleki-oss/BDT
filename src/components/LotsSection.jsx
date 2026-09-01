@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import LotAccordionItem from "./LotAccordionItem"
 import Lightbox from "./ui/Lightbox"
 import brickFacadePhoto from "../assets/images/brick-facade.jpg"
@@ -27,11 +27,43 @@ const LOTS = [
 ]
 
 function LotsSection() {
-  const [openId, setOpenId] = useState(LOTS[0].id)
+  const [openIds, setOpenIds] = useState(new Set())
   const [lightboxOpen, setLightboxOpen] = useState(false)
+  const firstItemRef = useRef(null)
+
+  function toggleLot(id) {
+    setOpenIds((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
+
+  useEffect(() => {
+    const el = firstItemRef.current
+    if (!el) return
+    let timer
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          timer = setTimeout(() => {
+            setOpenIds((prev) => new Set(prev).add(LOTS[0].id))
+          }, 600)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.5 }
+    )
+    observer.observe(el)
+    return () => {
+      observer.disconnect()
+      clearTimeout(timer)
+    }
+  }, [])
 
   return (
-    <section id="lots" className="flex flex-col gap-6 w-full scroll-mt-24">
+    <section id="lots" className="flex flex-col gap-6 w-full scroll-mt-[calc(var(--header-height)+16px)]">
       <div className="flex flex-col gap-1 w-full">
         <p className="font-body font-semibold text-[20px] leading-[22.5px] text-brand-blue">
           Lots disponibles
@@ -50,15 +82,16 @@ function LotsSection() {
       </div>
 
       <div className="flex flex-col gap-2 w-full">
-        {LOTS.map((lot) => (
-          <LotAccordionItem
-            key={lot.id}
-            lot={lot}
-            planImage={planImage}
-            open={openId === lot.id}
-            onToggle={() => setOpenId((id) => (id === lot.id ? null : lot.id))}
-            onExpandPlan={() => setLightboxOpen(true)}
-          />
+        {LOTS.map((lot, i) => (
+          <div key={lot.id} ref={i === 0 ? firstItemRef : undefined}>
+            <LotAccordionItem
+              lot={lot}
+              planImage={planImage}
+              open={openIds.has(lot.id)}
+              onToggle={() => toggleLot(lot.id)}
+              onExpandPlan={() => setLightboxOpen(true)}
+            />
+          </div>
         ))}
       </div>
 

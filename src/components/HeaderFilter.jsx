@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { FadersHorizontal, ArrowsClockwise, GridFour, MapTrifold } from "@phosphor-icons/react"
 import logo from "../assets/images/logo-foncier.png"
 import Button from "./ui/Button"
@@ -8,13 +8,6 @@ import Dropdown from "./ui/Dropdown"
 import SurfaceInput from "./ui/SurfaceInput"
 import Checkbox from "./ui/Checkbox"
 import LanguageSelector from "./ui/LanguageSelector"
-
-const NAV_LINKS = [
-  { label: "Secteur d'activité", sectionId: "secteur-activite" },
-  { label: "Rechercher un terrain", to: "/offres" },
-  { label: "Nos services", sectionId: "services" },
-  { label: "Nous contacter", to: "/formulaire" },
-]
 
 const SECTORS = ["Data center", "Logistique", "Industrie", "Artisanat"]
 
@@ -40,6 +33,47 @@ function displaySurface(v) {
   return v?.value ? `${v.value} ${v.unit}` : null
 }
 
+const DISPONIBILITE_LABELS = { immediate: "Immédiate", m0_6: "0 à 6 mois", m6_12: "6 à 12 mois", plus12: "plus de 12 mois" }
+
+function displayDisponibilite(v) {
+  if (!v) return null
+  const parts = Object.keys(DISPONIBILITE_LABELS).filter((k) => v[k]).map((k) => DISPONIBILITE_LABELS[k])
+  return parts.length ? parts.join(", ") : null
+}
+
+const TRANSPORT_LABELS = { autoroute: "Autoroute", gare: "Gare", port: "Port", aeroport: "Aéroport" }
+
+function displayTransports(v) {
+  if (!v) return null
+  const parts = Object.keys(TRANSPORT_LABELS).filter((k) => v[k]?.checked).map((k) => TRANSPORT_LABELS[k])
+  return parts.length ? parts.join(", ") : null
+}
+
+function displayElectricite(distance, puissance) {
+  const parts = [distance, puissance].filter(Boolean)
+  return parts.length ? parts.join(", ") : null
+}
+
+function displayLabels(v) {
+  if (!v) return null
+  const count = Object.values(v).filter(Boolean).length
+  return count > 0 ? `${count} label${count > 1 ? "s" : ""}` : null
+}
+
+function countActiveFilters(v = {}) {
+  let count = 0
+  if (v.localisation) count += 1
+  count += [v.typeImplementation?.achat, v.typeImplementation?.location].filter(Boolean).length
+  if (v.secteur) count += 1
+  count += [v.typeOffre?.terrain, v.typeOffre?.immobilier].filter(Boolean).length
+  if (v.surface?.value) count += 1
+  if (v.disponibilite) count += Object.values(v.disponibilite).filter(Boolean).length
+  if (v.transports) count += Object.values(v.transports).filter((t) => t?.checked).length
+  count += [v.electriciteDistance, v.puissance].filter(Boolean).length
+  if (v.labels) count += Object.values(v.labels).filter(Boolean).length
+  return count
+}
+
 function HeaderFilter({
   activeView = "grille",
   onOpenAllFilters,
@@ -49,15 +83,6 @@ function HeaderFilter({
   hasPendingChanges = false,
   onRefresh,
 }) {
-  const navigate = useNavigate()
-
-  function handleSectionClick(sectionId) {
-    return (e) => {
-      e.preventDefault()
-      navigate("/", { state: { scrollTo: sectionId } })
-    }
-  }
-
   function renderFilterWidget(key, close) {
     switch (key) {
       case "localisation":
@@ -75,6 +100,7 @@ function HeaderFilter({
             placeholder="Sélectionner un secteur d'activité"
             options={SECTORS}
             value={filterValues.secteur || null}
+            allLabel="Tous les secteurs"
             onChange={(v) => {
               onFilterChange?.("secteur", v)
               close()
@@ -134,58 +160,51 @@ function HeaderFilter({
   return (
     <div className="bg-white shadow-[0px_2px_12px_rgba(4,63,84,0.25)] sticky top-0 z-20">
       <header className="bg-white">
-        <div className="flex flex-wrap justify-end items-center gap-2 px-4 pt-4 lg:px-10">
-          <Button variant="dark" className="!h-auto !py-1 !px-4 text-[14px]">
-            Entreprise
-          </Button>
-          <Button variant="outline" className="!h-auto !py-1 !px-4 text-[14px]">
-            Collectivité
-          </Button>
-          <Button variant="outline" className="!h-auto !py-1 !px-4 text-[14px]">
-            Mon compte
-          </Button>
-          <LanguageSelector />
-        </div>
-        <div className="h-px bg-grey-200 mt-4" />
-        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-3 lg:px-10 lg:py-0">
-          <Link
-            to="/"
-            className="rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
-          >
-            <img src={logo} alt="Foncier+" className="h-12 w-auto lg:h-[72px]" />
-          </Link>
-          <nav className="flex flex-wrap gap-x-6 gap-y-2 items-center font-heading text-[14px] lg:text-[16px] text-brand-blue">
-            {NAV_LINKS.map((link) => {
-              const className =
-                "h-12 flex items-center rounded-sm transition-opacity hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
-              return link.sectionId ? (
-                <a
-                  key={link.label}
-                  href="#"
-                  onClick={handleSectionClick(link.sectionId)}
-                  className={className}
-                >
-                  {link.label}
-                </a>
-              ) : (
-                <Link key={link.label} to={link.to} className={className}>
-                  {link.label}
-                </Link>
-              )
-            })}
-          </nav>
+        <div className={activeView === "carte" ? "w-full" : "max-w-[1400px] mx-auto"}>
+          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-4 lg:px-[114px]">
+            <Link
+              to="/"
+              className="rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+            >
+              <img src={logo} alt="Foncier+" className="w-[242px] h-auto" />
+            </Link>
+            <div className="flex flex-wrap items-center gap-2">
+              <Button variant="dark" className="!h-auto !py-1 !px-4 text-[14px]">
+                Entreprise
+              </Button>
+              <Button variant="outline" className="!h-auto !py-1 !px-4 text-[14px]">
+                Collectivité
+              </Button>
+              <Button variant="outline" className="!h-auto !py-1 !px-4 text-[14px]">
+                Mon compte
+              </Button>
+              <Button as={Link} to="/formulaire" variant="solid" className="!h-auto !py-1 !px-4 text-[14px]">
+                Nous contacter
+              </Button>
+              <LanguageSelector />
+            </div>
+          </div>
         </div>
       </header>
 
-      <div className="relative border-t border-grey-200 flex flex-col gap-3 px-4 py-2 lg:flex-row lg:items-center lg:justify-between lg:px-10">
+      <div
+        className={`relative border-t border-grey-200 flex flex-col gap-3 px-4 py-2 lg:flex-row lg:items-center lg:justify-between lg:px-[114px] ${
+          activeView === "carte" ? "w-full" : "max-w-[1400px] mx-auto"
+        }`}
+      >
         <div className="flex items-center gap-3 lg:contents">
           <div className="flex flex-wrap gap-2 items-start lg:flex-nowrap">
             <button
               onClick={onOpenAllFilters}
-              className="h-6 flex items-center gap-1 px-2 border border-brand-blue rounded-full text-[14px] font-semibold text-brand-blue transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue shrink-0"
+              className="h-[30px] flex items-center gap-1 px-4 border border-brand-blue rounded-full text-[15px] font-semibold text-brand-blue transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue shrink-0"
             >
               Filtres
               <FadersHorizontal size={20} />
+              {countActiveFilters(filterValues) > 0 && (
+                <span className="size-4 rounded-full bg-brand-red text-white text-[10px] font-semibold flex items-center justify-center shrink-0">
+                  {countActiveFilters(filterValues)}
+                </span>
+              )}
             </button>
             {FILTERS.map((f) => {
               let displayValue
@@ -203,10 +222,54 @@ function HeaderFilter({
                     value={displayValue}
                     contentWidth={isCompact ? "w-[180px]" : "w-[340px]"}
                     renderContent={({ close }) => renderFilterWidget(f.key, close)}
+                    onClear={() => onFilterChange?.(f.key, null)}
                   />
                 </div>
               )
             })}
+            {displayDisponibilite(filterValues.disponibilite) && (
+              <div className="shrink-0">
+                <FilterPill
+                  label="Disponibilité"
+                  value={displayDisponibilite(filterValues.disponibilite)}
+                  onOpenFull={onOpenAllFilters}
+                  onClear={() => onFilterChange?.("disponibilite", null)}
+                />
+              </div>
+            )}
+            {displayTransports(filterValues.transports) && (
+              <div className="shrink-0">
+                <FilterPill
+                  label="Infrastructures de transports"
+                  value={displayTransports(filterValues.transports)}
+                  onOpenFull={onOpenAllFilters}
+                  onClear={() => onFilterChange?.("transports", null)}
+                />
+              </div>
+            )}
+            {displayElectricite(filterValues.electriciteDistance, filterValues.puissance) && (
+              <div className="shrink-0">
+                <FilterPill
+                  label="Electricité"
+                  value={displayElectricite(filterValues.electriciteDistance, filterValues.puissance)}
+                  onOpenFull={onOpenAllFilters}
+                  onClear={() => {
+                    onFilterChange?.("electriciteDistance", null)
+                    onFilterChange?.("puissance", null)
+                  }}
+                />
+              </div>
+            )}
+            {displayLabels(filterValues.labels) && (
+              <div className="shrink-0">
+                <FilterPill
+                  label="Label"
+                  value={displayLabels(filterValues.labels)}
+                  onOpenFull={onOpenAllFilters}
+                  onClear={() => onFilterChange?.("labels", null)}
+                />
+              </div>
+            )}
           </div>
         </div>
 

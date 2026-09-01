@@ -21,11 +21,11 @@ function DistanceDropdown({ options, value, onChange, placeholder = "Sélectionn
   }, [])
 
   return (
-    <div className="relative shrink-0" ref={ref}>
+    <div className="relative w-full" ref={ref}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="border-l border-grey-200 pl-2 flex items-center gap-1 h-full hover:text-brand-blue transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+        className="border border-grey-200 bg-white h-12 w-full px-[17px] flex items-center justify-between gap-1 transition-colors hover:border-brand-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
       >
         <span className={`text-[15px] whitespace-nowrap ${value ? "text-brand-blue" : "text-grey"}`}>
           {value || placeholder}

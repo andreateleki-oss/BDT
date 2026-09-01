@@ -3,7 +3,7 @@ import { CaretDown } from "@phosphor-icons/react"
 
 const UNITS = ["Ha", "m²"]
 
-function SurfaceInput({ label, value, onChange, unit, onUnitChange, className = "" }) {
+function SurfaceInput({ label, value, onChange, unit, onUnitChange, className = "", muted = false }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
 
@@ -20,7 +20,12 @@ function SurfaceInput({ label, value, onChange, unit, onUnitChange, className = 
       {label && (
         <p className="font-heading text-[12px] uppercase text-brand-blue">{label}</p>
       )}
-      <div className="h-12 bg-grey-50 border border-grey-200 flex items-center px-[17px] gap-2 relative transition-colors hover:border-brand-blue focus-within:border-brand-blue" ref={ref}>
+      <div
+        className={`h-12 border border-grey-200 flex items-center px-[17px] gap-2 relative transition-colors hover:border-brand-blue focus-within:border-brand-blue ${
+          muted ? "bg-grey-50" : "bg-white"
+        }`}
+        ref={ref}
+      >
         <input
           type="number"
           min="0"
@@ -32,7 +37,7 @@ function SurfaceInput({ label, value, onChange, unit, onUnitChange, className = 
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
-          className="border-l border-grey-200 pl-2 flex items-center gap-1 text-grey text-[15px] shrink-0 hover:text-brand-blue transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+          className="border-l border-grey-200 pl-2 flex items-center gap-1 text-brand-blue text-[15px] shrink-0 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
         >
           {unit}
           <CaretDown size={20} className="text-grey" />

@@ -4,6 +4,7 @@ import HeaderFilter from "../components/HeaderFilter"
 import PropertyCard from "../components/PropertyCard"
 import Pagination from "../components/ui/Pagination"
 import ViewSwitch from "../components/ui/ViewSwitch"
+import Breadcrumb from "../components/ui/Breadcrumb"
 import AllFiltersModal, { toModalInitialValues } from "../components/AllFiltersModal"
 import Footer from "../components/Footer"
 import { OFFERS, filterOffers } from "../data/offers"
@@ -26,6 +27,13 @@ function GridView() {
     setPage(1)
   }, [appliedFilters])
 
+  useEffect(() => {
+    document.title = "Rechercher un terrain - Foncier+"
+    return () => {
+      document.title = "Prototype Foncier"
+    }
+  }, [])
+
   return (
     <main className="font-body">
       <HeaderFilter
@@ -38,7 +46,14 @@ function GridView() {
         onFilterChange={(key, value) => setDraftFilters((f) => ({ ...f, [key]: value || null }))}
       />
 
-      <section className="flex flex-col gap-8 items-center py-[60px] px-4 lg:px-[114px]">
+      <section className="flex flex-col gap-8 items-center py-[60px] px-4 lg:px-[114px] max-w-[1400px] mx-auto">
+        <div className="flex flex-col gap-4 w-full">
+          <Breadcrumb items={[{ label: "Accueil", to: "/" }, { label: "Rechercher un terrain" }]} />
+          <h1 className="font-heading text-[28px] leading-[1.1] lg:text-[46px] lg:leading-[1.01] lg:tracking-[-1.04px] text-brand-blue">
+            Rechercher un terrain
+          </h1>
+        </div>
+
         <div className="flex items-center justify-between w-full">
           <p className="font-heading font-medium text-[16px] tracking-[-0.44px] text-brand-blue">
             {offers.length.toLocaleString("fr-FR")} offres disponibles

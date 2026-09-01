@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { FilePdf, Heart, MapPin, ArrowsOut, Toolbox, Handshake, CalendarBlank, Building } from "@phosphor-icons/react"
 import Button from "./ui/Button"
 import heroImage from "../assets/images/factory-chimney.jpg"
@@ -30,8 +30,21 @@ function SummaryItem({ label, value, icon: Icon }) {
   )
 }
 
-function OfferDetailHeader({ title = "Nom du site", onContact }) {
+function OfferDetailHeader({ title = "Nom du site", onContact, onContactVisibilityChange }) {
   const [favorited, setFavorited] = useState(false)
+  const ctaRef = useRef(null)
+
+  useEffect(() => {
+    const el = ctaRef.current
+    if (!el || !onContactVisibilityChange) return
+    const headerHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) || 0
+    const observer = new IntersectionObserver(
+      ([entry]) => onContactVisibilityChange(entry.isIntersecting),
+      { rootMargin: `-${headerHeight}px 0px 0px 0px` }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [onContactVisibilityChange])
 
   return (
     <section className="flex flex-col gap-11 px-4 lg:px-[114px]">
@@ -41,31 +54,38 @@ function OfferDetailHeader({ title = "Nom du site", onContact }) {
         </p>
         <div className="flex gap-2 items-center flex-wrap">
           <button
-            className="bg-white border border-brand-blue rounded-sm size-12 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+            className="bg-white border border-brand-blue size-12 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
             aria-label="Télécharger la fiche PDF"
           >
             <FilePdf size={20} className="text-brand-blue" />
           </button>
           <button
             onClick={() => setFavorited((f) => !f)}
-            className="bg-white border border-brand-blue rounded-sm size-12 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+            className="bg-white border border-brand-blue size-12 flex items-center justify-center transition-colors hover:bg-brand-blue/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
             aria-label="Ajouter aux favoris"
           >
             <Heart size={20} weight={favorited ? "fill" : "regular"} className="text-brand-red" />
           </button>
-          <Button variant="solid" onClick={onContact}>
-            Prendre contact
-          </Button>
+          <div ref={ctaRef} className="inline-flex">
+            <Button variant="solid" onClick={onContact}>
+              Prendre contact
+            </Button>
+          </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-8 items-stretch lg:flex-row lg:items-end w-full">
-        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
-          {SUMMARY.map((item) => (
-            <SummaryItem key={item.label} {...item} />
-          ))}
+      <div id="vue-ensemble" className="flex flex-col gap-8 items-stretch lg:flex-row lg:items-end w-full scroll-mt-[calc(var(--header-height)+16px)]">
+        <div className="flex-1 flex flex-col gap-6">
+          <p className="font-body font-semibold text-[20px] leading-[22.5px] text-brand-blue">
+            Vue d'ensemble
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
+            {SUMMARY.map((item) => (
+              <SummaryItem key={item.label} {...item} />
+            ))}
+          </div>
         </div>
-        <div className="flex-1 h-[220px] lg:h-[255px]">
+        <div className="flex-1 aspect-video">
           <img src={heroImage} alt={title} className="size-full object-cover" />
         </div>
       </div>

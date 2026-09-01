@@ -48,7 +48,7 @@ function MapPreviewPin({ style, offer }) {
               }`}
             >
               <Link to={`/offre/${offer.id}`} className="block">
-                <img src={offer.image} alt={offer.title} className="w-full h-[140px] object-cover" />
+                <img src={offer.image} alt={offer.title} className="w-full aspect-video object-cover" />
                 <div className="flex flex-col gap-2 p-3">
                   <p className="font-heading font-medium text-[16px] text-brand-blue">
                     {offer.title}

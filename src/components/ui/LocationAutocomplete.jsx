@@ -98,7 +98,7 @@ function searchLocations(query) {
     .map(({ loc }) => loc)
 }
 
-function LocationAutocomplete({ label, placeholder, value, onChange, onSelect, className = "" }) {
+function LocationAutocomplete({ label, placeholder, value, onChange, onSelect, className = "", muted = false }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
 
@@ -125,7 +125,11 @@ function LocationAutocomplete({ label, placeholder, value, onChange, onSelect, c
       {label && (
         <p className="font-heading text-[12px] uppercase text-brand-blue">{label}</p>
       )}
-      <div className="h-12 bg-grey-50 border border-grey-200 flex items-center px-[17px] transition-colors hover:border-brand-blue focus-within:border-brand-blue">
+      <div
+        className={`h-12 border border-grey-200 flex items-center px-[17px] transition-colors hover:border-brand-blue focus-within:border-brand-blue ${
+          muted ? "bg-grey-50" : "bg-white"
+        }`}
+      >
         <input
           type="text"
           value={query}

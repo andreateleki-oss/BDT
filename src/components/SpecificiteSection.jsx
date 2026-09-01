@@ -9,7 +9,7 @@ const ROWS = [
 
 function SpecificiteSection() {
   return (
-    <section id="specificite" className="flex flex-col gap-6 w-full scroll-mt-24 text-brand-blue">
+    <section id="specificite" className="flex flex-col gap-6 w-full scroll-mt-[calc(var(--header-height)+16px)] text-brand-blue">
       <p className="font-body font-semibold text-[20px] leading-[22.5px]">Spécificités du site</p>
 
       <div className="flex flex-col gap-8">

@@ -26,8 +26,8 @@ function ImplantedSection() {
   }, [pageSize])
 
   return (
-    <section className="flex flex-col gap-11 items-center justify-center py-10 px-4 lg:px-[114px]">
-      <CarouselHeader titleLight="Ils se sont" titleBold="implantés">
+    <section className="flex flex-col gap-11 items-center justify-center pt-10 pb-20 px-4 lg:px-[114px] max-w-[1400px] mx-auto">
+      <CarouselHeader titleLight="Ils se sont" titleBold="implantés" size="sm">
         <CarouselNav
           onPrev={() => setPage((p) => Math.max(0, p - 1))}
           onNext={() => setPage((p) => Math.min(PAGES.length - 1, p + 1))}

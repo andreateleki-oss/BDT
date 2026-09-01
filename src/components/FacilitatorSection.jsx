@@ -4,23 +4,23 @@ import IconFeatureGrid from "./ui/IconFeatureGrid"
 const ITEMS = [
   {
     icon: Hammer,
-    title: "Laurem Ipsum",
-    description: "Laurem Ipsum dolor sit amer, consectetur. Laurem Ipsum dolor sit amer.",
+    title: "Lorem Ipsum",
+    description: "Lorem Ipsum dolor sit amer, consectetur. Lorem Ipsum dolor sit amer.",
   },
   {
     icon: Lightbulb,
-    title: "Laurem Ipsum",
-    description: "Laurem Ipsum dolor sit amer, consectetur. Laurem Ipsum dolor sit amer",
+    title: "Lorem Ipsum",
+    description: "Lorem Ipsum dolor sit amer, consectetur. Lorem Ipsum dolor sit amer",
   },
   {
     icon: Gauge,
-    title: "Laurem Ipsum",
-    description: "Laurem Ipsum dolor sit amer, consectetur. Laurem Ipsum dolor sit amer.",
+    title: "Lorem Ipsum",
+    description: "Lorem Ipsum dolor sit amer, consectetur. Lorem Ipsum dolor sit amer.",
   },
   {
     icon: FolderSimple,
-    title: "Laurem Ipsum",
-    description: "Laurem Ipsum dolor sit amer, consectetur. Laurem Ipsum dolor sit amer.",
+    title: "Lorem Ipsum",
+    description: "Lorem Ipsum dolor sit amer, consectetur. Lorem Ipsum dolor sit amer.",
   },
 ]
 

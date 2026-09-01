@@ -5,12 +5,12 @@ function NavButton({ onClick, disabled, icon: Icon, label }) {
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`size-11 flex items-center justify-center transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
-        disabled ? "bg-brand-blue/30 cursor-not-allowed" : "bg-brand-blue hover:bg-brand-blue/80"
+      className={`group size-11 flex items-center justify-center bg-white border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue ${
+        disabled ? "border-grey-300 cursor-not-allowed" : "border-brand-blue hover:bg-brand-blue"
       }`}
       aria-label={label}
     >
-      <Icon size={20} className="text-white" />
+      <Icon size={20} className={disabled ? "text-grey-300" : "text-brand-blue transition-colors group-hover:text-white"} />
     </button>
   )
 }

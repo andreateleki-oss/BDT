@@ -9,7 +9,7 @@ const LEGEND = [
 
 function TissuEconomiqueSection() {
   return (
-    <section id="tissu-economique" className="flex flex-col gap-10 w-full scroll-mt-24">
+    <section id="tissu-economique" className="flex flex-col gap-10 w-full scroll-mt-[calc(var(--header-height)+16px)]">
       <div className="flex flex-col gap-6 text-brand-blue">
         <p className="font-body font-semibold text-[20px] leading-[22.5px]">
           Tissu économique et formations

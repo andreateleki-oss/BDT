@@ -1,6 +1,6 @@
 function IconInfoSection({ id, title, rows }) {
   return (
-    <section id={id} className="flex flex-col gap-6 w-full scroll-mt-24 text-brand-blue">
+    <section id={id} className="flex flex-col gap-6 w-full scroll-mt-[calc(var(--header-height)+16px)] text-brand-blue">
       <p className="font-body font-semibold text-[20px] leading-[22.5px]">{title}</p>
       <div className="flex flex-col gap-8">
         {rows.map(({ icon: Icon, label, value }) => (

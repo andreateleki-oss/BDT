@@ -1,6 +1,6 @@
 import { CaretDown } from "@phosphor-icons/react"
 
-function TextInput({ label, placeholder, unit, hasCaret, muted = true, className = "" }) {
+function TextInput({ label, placeholder, unit, hasCaret, muted = false, className = "" }) {
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
       {label && (

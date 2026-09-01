@@ -25,8 +25,8 @@ function StudiesSection() {
   }, [pageSize])
 
   return (
-    <section className="flex flex-col gap-11 items-center justify-center py-10 px-4 lg:px-[114px]">
-      <CarouselHeader titleLight="Études et guides de" titleBold="nos partenaires">
+    <section className="flex flex-col gap-11 items-center justify-center py-10 px-4 lg:px-[114px] max-w-[1400px] mx-auto">
+      <CarouselHeader titleLight="Études et guides de" titleBold="nos partenaires" size="sm">
         <CarouselNav
           onPrev={() => setPage((p) => Math.max(0, p - 1))}
           onNext={() => setPage((p) => Math.min(PAGES.length - 1, p + 1))}

@@ -19,7 +19,7 @@ function Checkbox({ label, checked, onChange, name }) {
       >
         {checked && <Check size={16} weight="bold" className="text-white" />}
       </span>
-      <span className="text-[15px] font-semibold text-grey-900">{label}</span>
+      <span className="text-[15px] text-brand-blue">{label}</span>
     </label>
   )
 }

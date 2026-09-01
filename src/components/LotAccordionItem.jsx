@@ -1,3 +1,5 @@
+import { useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
 import {
   CaretUp,
   CaretDown,
@@ -20,6 +22,8 @@ const INFO_ROWS = (lot) => [
 ]
 
 function LotAccordionItem({ lot, open, onToggle, onExpandPlan, planImage }) {
+  const [overflowVisible, setOverflowVisible] = useState(false)
+
   return (
     <div className="bg-grey-200 border border-grey-200 overflow-hidden w-full">
       <button
@@ -43,52 +47,64 @@ function LotAccordionItem({ lot, open, onToggle, onExpandPlan, planImage }) {
         )}
       </button>
 
-      {open && (
-        <div className="bg-white flex flex-col gap-6 px-6 pb-6 border-t border-grey-200 pt-6">
-          <div className="w-full aspect-[215/121] overflow-hidden">
-            <img src={lot.image} alt={lot.name} className="size-full object-cover" />
-          </div>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            className={overflowVisible ? "overflow-visible" : "overflow-hidden"}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            onAnimationStart={() => setOverflowVisible(false)}
+            onAnimationComplete={() => setOverflowVisible(true)}
+          >
+            <div className="bg-white flex flex-col gap-6 px-6 pb-6 border-t border-grey-200 pt-6">
+              <div className="w-full aspect-video overflow-hidden">
+                <img src={lot.image} alt={lot.name} className="size-full object-cover" />
+              </div>
 
-          <div className="flex flex-col gap-8">
-            {INFO_ROWS(lot).map(({ icon: Icon, label, value }) => (
-              <div key={label} className="flex flex-col gap-2 lg:flex-row lg:items-start">
-                <div className="flex-1 flex items-center gap-2">
-                  <div className="size-7 shrink-0 drop-shadow-[0px_2px_12px_rgba(91,0,2,0.16)] flex items-center justify-center">
-                    <Icon size={20} className="text-brand-red" />
+              <div className="flex flex-col gap-8">
+                {INFO_ROWS(lot).map(({ icon: Icon, label, value }) => (
+                  <div key={label} className="flex flex-col gap-2 lg:flex-row lg:items-start">
+                    <div className="flex-1 flex items-center gap-2">
+                      <div className="size-7 shrink-0 drop-shadow-[0px_2px_12px_rgba(91,0,2,0.16)] flex items-center justify-center">
+                        <Icon size={20} className="text-brand-red" />
+                      </div>
+                      <p className="font-heading font-medium text-[16px] leading-[1.2] tracking-[-0.44px] text-brand-blue">
+                        {label}
+                      </p>
+                    </div>
+                    <div className="flex-1 font-body text-[16px] leading-[1.5] text-brand-blue">
+                      {Array.isArray(value) ? value.map((v, i) => <p key={i}>{v}</p>) : <p>{value}</p>}
+                    </div>
                   </div>
-                  <p className="font-heading font-medium text-[16px] leading-[1.2] tracking-[-0.44px] text-brand-blue">
-                    {label}
-                  </p>
-                </div>
-                <div className="flex-1 font-body text-[16px] leading-[1.5] text-brand-blue">
-                  {Array.isArray(value) ? value.map((v, i) => <p key={i}>{v}</p>) : <p>{value}</p>}
-                </div>
-              </div>
-            ))}
+                ))}
 
-            <div className="flex flex-col gap-2 lg:flex-row lg:items-start">
-              <div className="flex-1 flex items-center gap-2">
-                <div className="size-7 shrink-0 drop-shadow-[0px_2px_12px_rgba(91,0,2,0.16)] flex items-center justify-center">
-                  <FrameCorners size={20} className="text-brand-red" />
+                <div className="flex flex-col gap-2 lg:flex-row lg:items-start">
+                  <div className="flex-1 flex items-center gap-2">
+                    <div className="size-7 shrink-0 drop-shadow-[0px_2px_12px_rgba(91,0,2,0.16)] flex items-center justify-center">
+                      <FrameCorners size={20} className="text-brand-red" />
+                    </div>
+                    <p className="font-heading font-medium text-[16px] leading-[1.2] tracking-[-0.44px] text-brand-blue">
+                      Plan de la parcelle
+                    </p>
+                  </div>
+                  <div className="flex-1 relative">
+                    <img src={planImage} alt="Plan de la parcelle" className="w-full aspect-video object-cover" />
+                    <button
+                      onClick={onExpandPlan}
+                      className="group absolute top-2 right-2 bg-white border border-brand-blue size-6 flex items-center justify-center transition-colors hover:bg-brand-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+                      aria-label="Agrandir le plan"
+                    >
+                      <FrameCorners size={14} className="text-brand-blue transition-colors group-hover:text-white" />
+                    </button>
+                  </div>
                 </div>
-                <p className="font-heading font-medium text-[16px] leading-[1.2] tracking-[-0.44px] text-brand-blue">
-                  Plan de la parcelle
-                </p>
-              </div>
-              <div className="flex-1 relative">
-                <img src={planImage} alt="Plan de la parcelle" className="w-full h-[229px] object-cover" />
-                <button
-                  onClick={onExpandPlan}
-                  className="group absolute top-2 right-2 bg-white border border-brand-blue rounded-sm size-6 flex items-center justify-center transition-colors hover:bg-brand-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
-                  aria-label="Agrandir le plan"
-                >
-                  <FrameCorners size={14} className="text-brand-blue transition-colors group-hover:text-white" />
-                </button>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

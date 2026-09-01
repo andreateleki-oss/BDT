@@ -7,7 +7,7 @@ function OfferListItem({ to, image, title, location, surface, sector, tag, isRen
       to={to}
       className="flex gap-4 items-start w-full group rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
     >
-      <div className="relative size-[135px] shrink-0 overflow-hidden">
+      <div className="relative w-[135px] aspect-video shrink-0 overflow-hidden">
         <img
           src={image}
           alt={title}
