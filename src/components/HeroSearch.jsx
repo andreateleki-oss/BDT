@@ -69,7 +69,7 @@ function HeroSearch() {
   }
 
   function handleSearch() {
-    navigate("/offres", {
+    navigate("/offres/liste", {
       state: {
         localisation: location || null,
         secteur: sector || null,

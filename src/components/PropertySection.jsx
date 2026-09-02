@@ -13,7 +13,7 @@ function PropertySection({ titleLight = "Derniers fonciers", titleBold = "dispon
     <section className="flex flex-col gap-11 items-center justify-center py-10 px-4 lg:px-[114px] max-w-[1400px] mx-auto">
       <CarouselHeader titleLight={titleLight} titleBold={titleBold}>
         <div className="hidden lg:block">
-          <Button as={Link} to="/offres/liste" variant="outline" icon={CaretRight}>
+          <Button as={Link} to="/offres" variant="outline" icon={CaretRight}>
             Voir toutes les offres
           </Button>
         </div>
@@ -36,7 +36,7 @@ function PropertySection({ titleLight = "Derniers fonciers", titleBold = "dispon
         )}
       </div>
 
-      <Button as={Link} to="/offres/liste" variant="outline" icon={CaretRight} className="w-full lg:hidden">
+      <Button as={Link} to="/offres" variant="outline" icon={CaretRight} className="w-full lg:hidden">
         Voir toutes les offres
       </Button>
     </section>

@@ -89,7 +89,7 @@ function OfferDetail() {
             </section>
             <div className="h-px bg-grey-200 w-full" />
 
-            <EnvironnementSection />
+            <EnvironnementSection coords={offer?.coords} />
             <div className="h-px bg-grey-200 w-full" />
 
             <LotsSection />

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Hammer, Warehouse, StackSimple } from "@phosphor-icons/react"
 import Dropdown from "./ui/Dropdown"
-import franceMap from "../assets/images/france-map.png"
+import FranceInteractiveMap from "./ui/FranceInteractiveMap"
 
 const REGIONS = [
   "Toute la France",
@@ -18,6 +18,7 @@ const REGIONS = [
   "Normandie",
   "Bourgogne-Franche-Comté",
   "Centre-Val de Loire",
+  "Corse",
 ]
 
 const KEYWORDS = [
@@ -52,7 +53,9 @@ function MapSection() {
       }}
     >
       <div className="flex flex-col items-center gap-8 lg:flex-row lg:justify-center lg:gap-16 py-16 px-4 lg:px-[114px] max-w-[1400px] mx-auto">
-        <img src={franceMap} alt="Carte du foncier en France" className="w-full max-w-[560px] lg:w-[560px] shrink-0" />
+        <div className="w-full max-w-[560px] lg:w-[560px] shrink-0">
+          <FranceInteractiveMap />
+        </div>
 
         <div className="flex flex-col gap-8 w-full lg:max-w-[610px]">
           <div className="flex flex-col gap-6 items-start text-brand-blue">

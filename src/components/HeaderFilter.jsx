@@ -161,7 +161,11 @@ function HeaderFilter({
     <div className="bg-white shadow-[0px_2px_12px_rgba(4,63,84,0.25)] sticky top-0 z-20">
       <header className="bg-white">
         <div className={activeView === "carte" ? "w-full" : "max-w-[1400px] mx-auto"}>
-          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-4 lg:px-[114px]">
+          <div
+            className={`flex flex-wrap items-center justify-between gap-2 px-4 py-4 ${
+              activeView === "carte" ? "lg:px-[46px]" : "lg:px-[114px]"
+            }`}
+          >
             <Link
               to="/"
               className="rounded-sm transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
@@ -188,8 +192,8 @@ function HeaderFilter({
       </header>
 
       <div
-        className={`relative border-t border-grey-200 flex flex-col gap-3 px-4 py-2 lg:flex-row lg:items-center lg:justify-between lg:px-[114px] ${
-          activeView === "carte" ? "w-full" : "max-w-[1400px] mx-auto"
+        className={`relative border-t border-grey-200 flex flex-col gap-3 px-4 py-2 lg:flex-row lg:items-center lg:justify-between ${
+          activeView === "carte" ? "w-full lg:px-[46px]" : "max-w-[1400px] mx-auto lg:px-[114px]"
         }`}
       >
         <div className="flex items-center gap-3 lg:contents">
@@ -283,7 +287,7 @@ function HeaderFilter({
         </Link>
 
         {hasPendingChanges && (
-          <div className="absolute left-1/2 -translate-x-1/2 top-full bg-white shadow-lg rounded-b-lg pt-1 pb-2 px-2 z-30">
+          <div className="absolute left-1/2 -translate-x-1/2 top-full bg-white shadow-lg rounded-b-lg pt-1 pb-2 px-2 z-10">
             <Button variant="solid" icon={ArrowsClockwise} onClick={onRefresh}>
               Actualiser
             </Button>

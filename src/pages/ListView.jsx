@@ -69,7 +69,13 @@ function ListView() {
           </div>
         )}
 
-        <MapPanel onExpand={() => setExpanded((e) => !e)} className="flex-1 min-h-[300px] lg:min-h-0" />
+        <MapPanel
+          offers={offers}
+          localisation={appliedFilters.localisation}
+          expanded={expanded}
+          onExpand={() => setExpanded((e) => !e)}
+          className="flex-1 min-h-[300px] lg:min-h-0"
+        />
       </div>
 
       <AllFiltersModal

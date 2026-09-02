@@ -5,72 +5,80 @@ import { MapPin as MapPinIcon, ArrowsOut, Toolbox } from "@phosphor-icons/react"
 
 const CLOSE_DELAY = 250
 
-function MapPreviewPin({ style, offer }) {
+function MapPreviewPin({ offer, onPinClick }) {
   const [hovered, setHovered] = useState(false)
+  const [openUpward, setOpenUpward] = useState(true)
   const closeTimer = useRef(null)
-  // Not enough room to open upward when the pin sits near the top of the map — open downward instead.
-  const openUpward = parseFloat(style?.top) > 40
+  const rootRef = useRef(null)
 
   function handleEnter() {
     if (closeTimer.current) {
       clearTimeout(closeTimer.current)
       closeTimer.current = null
     }
+    // The marker's own MapLibre wrapper (our React root's parent) is the element that actually
+    // competes with sibling markers for stacking order, so the z-index bump has to go there.
+    if (rootRef.current?.parentElement) rootRef.current.parentElement.style.zIndex = "20"
+    // Not enough room to open upward when the pin sits near the top of the map — open downward instead.
+    const mapContainer = rootRef.current?.closest(".maplibregl-map")
+    if (mapContainer) {
+      const pinRect = rootRef.current.getBoundingClientRect()
+      const mapRect = mapContainer.getBoundingClientRect()
+      setOpenUpward(pinRect.top - mapRect.top > mapRect.height * 0.4)
+    }
     setHovered(true)
   }
 
   function handleLeave() {
-    closeTimer.current = setTimeout(() => setHovered(false), CLOSE_DELAY)
+    closeTimer.current = setTimeout(() => {
+      setHovered(false)
+      if (rootRef.current?.parentElement) rootRef.current.parentElement.style.zIndex = ""
+    }, CLOSE_DELAY)
   }
 
   return (
-    <div
-      className={`absolute -translate-x-1/2 -translate-y-full size-4 ${hovered ? "z-20" : "z-0"}`}
-      style={style}
-    >
-      <div className="relative size-4" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
-        <div
-          className={`size-4 rounded-full bg-brand-red border-2 border-white shadow-md transition-transform ${
-            hovered ? "scale-125" : ""
-          }`}
-        />
-        <div className="absolute -inset-3 cursor-pointer" />
+    <div ref={rootRef} className="relative size-4" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
+      <div
+        className={`size-4 rounded-full bg-brand-red border-2 border-white shadow-md transition-transform ${
+          hovered ? "scale-125" : ""
+        }`}
+      />
+      <div className="absolute -inset-3 cursor-pointer" onClick={() => onPinClick?.(offer)} />
 
-        <AnimatePresence>
-          {hovered && (
-            <motion.div
-              initial={{ opacity: 0, y: openUpward ? 6 : -6, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: openUpward ? 6 : -6, scale: 0.96 }}
-              transition={{ duration: 0.15 }}
-              className={`absolute left-1/2 -translate-x-1/2 w-[230px] bg-white shadow-xl z-10 ${
-                openUpward ? "bottom-full mb-3" : "top-full mt-3"
-              }`}
-            >
-              <Link to={`/offre/${offer.id}`} className="block">
-                <img src={offer.image} alt={offer.title} className="w-full aspect-video object-cover" />
-                <div className="flex flex-col gap-2 p-3">
-                  <p className="font-heading font-medium text-[16px] text-brand-blue">
-                    {offer.title}
-                  </p>
-                  <div className="flex gap-2 items-center">
-                    <MapPinIcon size={16} className="text-brand-red shrink-0" />
-                    <p className="text-[13px] text-grey-600">{offer.location}</p>
-                  </div>
-                  <div className="flex gap-2 items-center">
-                    <ArrowsOut size={16} className="text-brand-red shrink-0" />
-                    <p className="text-[13px] text-grey-600">{offer.surface}</p>
-                  </div>
-                  <div className="flex gap-2 items-center">
-                    <Toolbox size={16} className="text-brand-red shrink-0" />
-                    <p className="text-[13px] text-grey-600">{offer.sector}</p>
-                  </div>
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            initial={{ opacity: 0, y: openUpward ? 6 : -6, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: openUpward ? 6 : -6, scale: 0.96 }}
+            transition={{ duration: 0.15 }}
+            className={`absolute left-1/2 -translate-x-1/2 w-[230px] bg-white shadow-xl z-10 ${
+              openUpward ? "bottom-full mb-3" : "top-full mt-3"
+            }`}
+          >
+            <Link to={`/offre/${offer.id}`} className="block">
+              <img src={offer.image} alt={offer.title} className="w-full aspect-video object-cover" />
+              <div className="flex flex-col gap-2 p-3">
+                <p className="font-heading font-medium text-[16px] text-brand-blue">
+                  {offer.title}
+                </p>
+                <div className="flex gap-2 items-center">
+                  <MapPinIcon size={16} className="text-brand-red shrink-0" />
+                  <p className="text-[13px] text-grey-600">{offer.location}</p>
                 </div>
-              </Link>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+                <div className="flex gap-2 items-center">
+                  <ArrowsOut size={16} className="text-brand-red shrink-0" />
+                  <p className="text-[13px] text-grey-600">{offer.surface}</p>
+                </div>
+                <div className="flex gap-2 items-center">
+                  <Toolbox size={16} className="text-brand-red shrink-0" />
+                  <p className="text-[13px] text-grey-600">{offer.sector}</p>
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

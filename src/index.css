@@ -27,6 +27,7 @@
 body {
   margin: 0;
   font-family: var(--font-body);
+  background-color: #ffffff;
 }
 
 @keyframes marquee {
