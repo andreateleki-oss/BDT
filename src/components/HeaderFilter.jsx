@@ -8,6 +8,9 @@ import Dropdown from "./ui/Dropdown"
 import SurfaceInput from "./ui/SurfaceInput"
 import Checkbox from "./ui/Checkbox"
 import LanguageSelector from "./ui/LanguageSelector"
+import { LABEL_CATEGORIES } from "./ui/LabelMultiSelect"
+
+const ALL_LABEL_OPTIONS = LABEL_CATEGORIES.flatMap((c) => c.options)
 
 const SECTORS = ["Data center", "Logistique", "Industrie", "Artisanat"]
 
@@ -56,8 +59,12 @@ function displayElectricite(distance, puissance) {
 
 function displayLabels(v) {
   if (!v) return null
-  const count = Object.values(v).filter(Boolean).length
-  return count > 0 ? `${count} label${count > 1 ? "s" : ""}` : null
+  const activeIds = Object.keys(v).filter((id) => v[id])
+  if (activeIds.length === 0) return null
+  if (activeIds.length === 1) {
+    return ALL_LABEL_OPTIONS.find((opt) => opt.id === activeIds[0])?.label ?? "1 label"
+  }
+  return `${activeIds.length} labels`
 }
 
 function countActiveFilters(v = {}) {

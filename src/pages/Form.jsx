@@ -82,8 +82,10 @@ function Form() {
   function handleSend(e) {
     e.preventDefault()
     const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
-    if (!nom.trim() || !emailValid || !message.trim()) {
-      setFormError("Merci de renseigner votre nom, un email valide et un message avant d'envoyer votre demande.")
+    if (!requestType || !nom.trim() || !emailValid || !message.trim()) {
+      setFormError(
+        "Merci de renseigner le type de demande, votre nom, un email valide et un message avant d'envoyer votre demande."
+      )
       return
     }
     setFormError("")
@@ -139,6 +141,7 @@ function Form() {
             <div className="flex flex-col gap-4 w-full">
               <p className="font-heading text-[12px] uppercase text-brand-blue">
                 Type de demande
+                <span className="text-brand-red"> *</span>
               </p>
               <div className="flex gap-2 flex-wrap">
                 {REQUEST_TYPES.map((type) => (

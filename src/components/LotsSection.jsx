@@ -44,13 +44,17 @@ function LotsSection() {
     const el = firstItemRef.current
     if (!el) return
     let timer
+    // Only auto-open once the item has stayed in view for 600ms — cancel the timer if it scrolls
+    // back out first, e.g. during a fast programmatic scroll (like "Prendre contact") passing through.
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           timer = setTimeout(() => {
             setOpenIds((prev) => new Set(prev).add(LOTS[0].id))
+            observer.disconnect()
           }, 600)
-          observer.disconnect()
+        } else {
+          clearTimeout(timer)
         }
       },
       { threshold: 0.5 }

@@ -5,6 +5,7 @@ import Checkbox from "./ui/Checkbox"
 import Dropdown from "./ui/Dropdown"
 import LocationAutocomplete from "./ui/LocationAutocomplete"
 import SurfaceInput from "./ui/SurfaceInput"
+import LabelMultiSelect from "./ui/LabelMultiSelect"
 import Button from "./ui/Button"
 import AllFiltersModal from "./AllFiltersModal"
 import heroBg from "../assets/images/hero-bg.png"
@@ -35,14 +36,15 @@ function HeroSearch() {
   const [offerType, setOfferType] = useState({ terrain: false, immobilier: false })
   const [surface, setSurface] = useState("")
   const [surfaceUnit, setSurfaceUnit] = useState("Ha")
+  const [labels, setLabels] = useState({})
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [advancedCount, setAdvancedCount] = useState(0)
   const [advancedFilters, setAdvancedFilters] = useState({
     disponibilite: null,
+    destination: null,
     transports: null,
     electriciteDistance: null,
     puissance: null,
-    labels: null,
   })
 
   function handleApplyFilters(filterValues, count) {
@@ -58,13 +60,14 @@ function HeroSearch() {
     })
     setSurface(filterValues.surface?.value || "")
     setSurfaceUnit(filterValues.surface?.unit || "Ha")
+    setLabels(filterValues.labels || {})
     setAdvancedCount(count)
     setAdvancedFilters({
       disponibilite: filterValues.disponibilite,
+      destination: filterValues.destination,
       transports: filterValues.transports,
       electriciteDistance: filterValues.electriciteDistance,
       puissance: filterValues.puissance,
-      labels: filterValues.labels,
     })
   }
 
@@ -76,6 +79,7 @@ function HeroSearch() {
         typeImplementation: { achat: forSale.acheter, location: forSale.louer },
         typeOffre: { ...offerType },
         surface: surface ? { value: surface, unit: surfaceUnit } : null,
+        labels: Object.keys(labels).length > 0 ? labels : null,
         ...advancedFilters,
       },
     })
@@ -170,6 +174,12 @@ function HeroSearch() {
                 onUnitChange={setSurfaceUnit}
                 className="w-full lg:w-[168px]"
               />
+              <LabelMultiSelect
+                value={labels}
+                onChange={(id) => setLabels((prev) => ({ ...prev, [id]: !prev[id] }))}
+                location={location}
+                className="w-full lg:w-[220px]"
+              />
               <div className="h-12 flex items-center shrink-0">
                 <Button
                   variant="outline"
@@ -206,10 +216,11 @@ function HeroSearch() {
           surfaceUnit,
           secteur: sector,
           ...(advancedFilters.disponibilite && { disponibilite: advancedFilters.disponibilite }),
+          ...(advancedFilters.destination && { destination: advancedFilters.destination }),
           ...(advancedFilters.transports && { transports: advancedFilters.transports }),
           ...(advancedFilters.electriciteDistance && { electriciteDistance: advancedFilters.electriciteDistance }),
           ...(advancedFilters.puissance && { puissance: advancedFilters.puissance }),
-          ...(advancedFilters.labels && { labels: advancedFilters.labels }),
+          ...(Object.keys(labels).length > 0 && { labels }),
         }}
       />
     </section>

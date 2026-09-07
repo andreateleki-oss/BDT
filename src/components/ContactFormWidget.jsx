@@ -28,6 +28,8 @@ function RequestTypeChip({ label, active, onClick }) {
 function ContactFormWidget({
   showSiteList = false,
   showContactForm = false,
+  showRequestType = true,
+  allowAddingSites = true,
   siteName = "Nom du site",
   ctaLabel = "Continuer",
   ctaIcon: CtaIcon = CaretRight,
@@ -73,84 +75,90 @@ function ContactFormWidget({
               </p>
             </div>
 
-            <div className="flex flex-col gap-4 w-full">
-              <p className="font-heading text-[12px] uppercase text-brand-blue">
-                Type de demande
-              </p>
-              <div className="flex gap-2 flex-wrap">
-                {REQUEST_TYPES.map((type) => (
-                  <RequestTypeChip
-                    key={type}
-                    label={type}
-                    active={selected === type}
-                    onClick={() => setSelected(type)}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-2 w-full">
-              {sites.length > 0 && (
-                <div className="flex flex-col gap-2 w-full max-w-[656px]">
-                  <p className="font-heading text-[12px] uppercase text-brand-blue">
-                    Sites concernés par votre demande
-                  </p>
-                  {sites.map((site, i) => (
-                    <div
-                      key={`${site.name}-${i}`}
-                      className="group bg-grey-50 border border-grey-200 h-12 flex items-center px-[17px] gap-4"
-                    >
-                      <span className="size-6 flex items-center justify-center bg-brand-red shrink-0">
-                        <Check size={16} weight="bold" className="text-white" />
-                      </span>
-                      <span className="flex-1 text-[15px] text-brand-blue truncate">{site.name}</span>
-                      {site.tag && (
-                        <span className="bg-[rgba(34,142,192,0.14)] text-[#0c5585] text-[14px] px-2 py-1 rounded-sm shrink-0">
-                          {site.tag}
-                        </span>
-                      )}
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveSite(i)}
-                        aria-label={`Retirer ${site.name} de la demande`}
-                        className="shrink-0 size-6 flex items-center justify-center text-grey opacity-0 group-hover:opacity-100 focus-visible:opacity-100 hover:text-brand-red transition-opacity"
-                      >
-                        <X size={18} />
-                      </button>
-                    </div>
+            {showRequestType && (
+              <div className="flex flex-col gap-4 w-full">
+                <p className="font-heading text-[12px] uppercase text-brand-blue">
+                  Type de demande
+                </p>
+                <div className="flex gap-2 flex-wrap">
+                  {REQUEST_TYPES.map((type) => (
+                    <RequestTypeChip
+                      key={type}
+                      label={type}
+                      active={selected === type}
+                      onClick={() => setSelected(type)}
+                    />
                   ))}
                 </div>
-              )}
-              {sites.length < MAX_SITES && !addingSite && (
-                <button
-                  type="button"
-                  onClick={() => setAddingSite(true)}
-                  className="flex items-center gap-2 h-12 px-[17px] w-full max-w-[656px] border border-dashed border-grey-300 text-brand-blue font-accent font-semibold transition-colors hover:bg-grey-50 hover:text-brand-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
-                >
-                  <PlusSquare size={20} />
-                  <span className="underline underline-offset-2">Ajouter un site à la demande</span>
-                </button>
-              )}
-              {addingSite && (
-                <div className="flex flex-col gap-4 items-stretch lg:flex-row lg:items-end">
-                  <div className="flex flex-col gap-2 w-full lg:w-[656px]">
+              </div>
+            )}
+
+            {(sites.length > 0 || allowAddingSites) && (
+              <div className="flex flex-col gap-2 w-full">
+                {sites.length > 0 && (
+                  <div className="flex flex-col gap-2 w-full max-w-[656px]">
                     <p className="font-heading text-[12px] uppercase text-brand-blue">
-                      Saisissez l'url du site à ajouter à la demande
+                      {sites.length > 1 ? "Sites concernés" : "Site concerné"} par votre demande
                     </p>
-                    <input
-                      type="text"
-                      value={siteUrl}
-                      onChange={(e) => setSiteUrl(e.target.value)}
-                      placeholder="http://url.du.site"
-                      className="bg-white border border-grey-200 h-12 px-[17px] text-[15px] text-brand-blue placeholder:text-grey w-full transition-colors focus:border-brand-blue outline-none"
-                    />
+                    {sites.map((site, i) => (
+                      <div
+                        key={`${site.name}-${i}`}
+                        className="group bg-grey-50 border border-grey-200 h-12 flex items-center px-[17px] gap-4"
+                      >
+                        <span className="size-6 flex items-center justify-center bg-brand-red shrink-0">
+                          <Check size={16} weight="bold" className="text-white" />
+                        </span>
+                        <span className="flex-1 text-[15px] text-brand-blue truncate">{site.name}</span>
+                        {site.tag && (
+                          <span className="bg-[rgba(34,142,192,0.14)] text-[#0c5585] text-[14px] px-2 py-1 rounded-sm shrink-0">
+                            {site.tag}
+                          </span>
+                        )}
+                        {allowAddingSites && (
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveSite(i)}
+                            aria-label={`Retirer ${site.name} de la demande`}
+                            className="shrink-0 size-6 flex items-center justify-center text-grey opacity-0 group-hover:opacity-100 focus-visible:opacity-100 hover:text-brand-red transition-opacity"
+                          >
+                            <X size={18} />
+                          </button>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                  <Button variant="solid" icon={Check} onClick={handleValidateSite}>
-                    Valider
-                  </Button>
-                </div>
-              )}
-            </div>
+                )}
+                {allowAddingSites && sites.length < MAX_SITES && !addingSite && (
+                  <button
+                    type="button"
+                    onClick={() => setAddingSite(true)}
+                    className="flex items-center gap-2 h-12 px-[17px] w-full max-w-[656px] border border-dashed border-grey-300 text-brand-blue font-accent font-semibold transition-colors hover:bg-grey-50 hover:text-brand-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+                  >
+                    <PlusSquare size={20} />
+                    <span className="underline underline-offset-2">Ajouter un site à la demande</span>
+                  </button>
+                )}
+                {allowAddingSites && addingSite && (
+                  <div className="flex flex-col gap-4 items-stretch lg:flex-row lg:items-end">
+                    <div className="flex flex-col gap-2 w-full lg:w-[656px]">
+                      <p className="font-heading text-[12px] uppercase text-brand-blue">
+                        Saisissez l'url du site à ajouter à la demande
+                      </p>
+                      <input
+                        type="text"
+                        value={siteUrl}
+                        onChange={(e) => setSiteUrl(e.target.value)}
+                        placeholder="http://url.du.site"
+                        className="bg-white border border-grey-200 h-12 px-[17px] text-[15px] text-brand-blue placeholder:text-grey w-full transition-colors focus:border-brand-blue outline-none"
+                      />
+                    </div>
+                    <Button variant="solid" icon={Check} onClick={handleValidateSite}>
+                      Valider
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="flex justify-start w-full">

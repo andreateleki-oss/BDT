@@ -3,9 +3,9 @@ import Button from "./ui/Button"
 import decorPiece2 from "../assets/images/logo-piece-2.png"
 
 const ITEMS = [
+  { id: "photos", label: "Photos du site" },
   { id: "vue-ensemble", label: "Vue d'ensemble" },
   { id: "descriptif", label: "Descriptif du site" },
-  { id: "photos", label: "Photos du site" },
   { id: "environnement", label: "Environnement" },
   { id: "lots", label: "Lots disponibles" },
   { id: "reseaux", label: "Réseaux" },
@@ -16,10 +16,6 @@ const ITEMS = [
 ]
 
 function scrollToSection(id) {
-  if (id === "vue-ensemble") {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-    return
-  }
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
 }
 

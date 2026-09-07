@@ -4,6 +4,7 @@ import Header from "../components/Header"
 import OfferDetailHeader from "../components/OfferDetailHeader"
 import SommaireSidebar, { SOMMAIRE_ITEMS } from "../components/SommaireSidebar"
 import Breadcrumb from "../components/ui/Breadcrumb"
+import VueEnsembleSection from "../components/VueEnsembleSection"
 import DescriptifSection from "../components/DescriptifSection"
 import PhotoCarousel from "../components/PhotoCarousel"
 import EnvironnementSection from "../components/EnvironnementSection"
@@ -27,9 +28,9 @@ import sitePhoto5 from "../assets/images/site-photo-5.png"
 // studies-photo.png and implanted-photo.png (512px wide) are excluded here: this carousel's
 // tall crop (~681x400) would upscale them 1.3-1.8x and look soft. These 4 assets are high-res enough.
 const CAROUSEL_IMAGES = [
+  factoryChimneyPhoto,
   siloPhoto,
   brickFacadePhoto,
-  factoryChimneyPhoto,
   sectorPhoto,
   sitePhoto5,
 ]
@@ -72,21 +73,21 @@ function OfferDetail() {
 
         <div className="h-px bg-grey-200 w-full" />
 
-        <div className="flex flex-col gap-8 items-stretch lg:flex-row lg:items-start px-4 lg:px-[114px]">
-          <aside className="hidden lg:block lg:w-[284px] shrink-0 lg:sticky lg:top-[calc(var(--header-height)+24px)] lg:self-start">
+        <div className="flex flex-col gap-8 items-stretch lg:flex-row lg:items-start lg:gap-12 px-4 lg:px-[114px]">
+          <aside className="hidden lg:block lg:w-[320px] shrink-0 lg:sticky lg:top-[calc(var(--header-height)+24px)] lg:self-start">
             <SommaireSidebar activeId={activeId} showCta={!topCtaVisible} />
           </aside>
 
-          <div className="flex-1 max-w-[712px] flex flex-col gap-11">
-            <DescriptifSection />
-            <div className="h-px bg-grey-200 w-full" />
-
+          <div className="flex-1 flex flex-col gap-11">
             <section id="photos" className="flex flex-col gap-6 w-full scroll-mt-[calc(var(--header-height)+16px)]">
-              <p className="font-body font-semibold text-[20px] leading-[22.5px] text-brand-blue">
-                Photos du site
-              </p>
               <PhotoCarousel images={CAROUSEL_IMAGES} />
             </section>
+            <div className="h-px bg-grey-200 w-full" />
+
+            <VueEnsembleSection />
+            <div className="h-px bg-grey-200 w-full" />
+
+            <DescriptifSection />
             <div className="h-px bg-grey-200 w-full" />
 
             <EnvironnementSection coords={offer?.coords} />
@@ -113,7 +114,13 @@ function OfferDetail() {
       </div>
 
       <div id="contacter" ref={contactRef} className="scroll-mt-[calc(var(--header-height)+16px)]">
-        <ContactFormWidget showSiteList siteName={siteName} />
+        <ContactFormWidget
+          showSiteList
+          siteName={siteName}
+          showRequestType={false}
+          allowAddingSites={false}
+          ctaLabel="Prendre contact"
+        />
       </div>
 
       <Footer />

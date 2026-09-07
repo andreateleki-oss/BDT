@@ -7,7 +7,7 @@ import Dropdown from "./ui/Dropdown"
 import LocationAutocomplete from "./ui/LocationAutocomplete"
 import SurfaceInput from "./ui/SurfaceInput"
 import DistanceDropdown from "./ui/DistanceDropdown"
-import LabelInfoBox from "./ui/LabelInfoBox"
+import { LABEL_CATEGORIES } from "./ui/LabelMultiSelect"
 import Button from "./ui/Button"
 
 const SECTIONS = [
@@ -17,22 +17,17 @@ const SECTIONS = [
   "surface",
   "secteur",
   "disponibilite",
+  "destination",
   "transports",
   "electricite",
   "label",
 ]
 
 const SECTORS = ["Data center", "Logistique", "Industrie", "Artisanat"]
+const DESTINATIONS = ["Artisanat", "Industrie", "Logistique", "Mixte"]
 
 const AUTOROUTE_OPTIONS = ["sur site", "moins de 2 km", "moins de 5 km", "moins de 10 km", "moins de 20 km", "plus de 20 km"]
 const SHORT_OPTIONS = ["moins de 5 km", "moins de 10 km", "moins de 30 km", "plus de 30 km"]
-
-const LABELS = [
-  { id: "label-1", tag: "National" },
-  { id: "label-2", tag: "National" },
-  { id: "label-3", tag: "Île de France" },
-  { id: "label-4", tag: "Nord pas de calais" },
-]
 
 function initialState() {
   return {
@@ -43,6 +38,7 @@ function initialState() {
     surfaceUnit: "Ha",
     secteur: null,
     disponibilite: { immediate: false, m0_6: false, m6_12: false, plus12: false },
+    destination: null,
     transports: {
       autoroute: { checked: false, distance: "moins de 5 km" },
       gare: { checked: false, distance: "moins de 10 km" },
@@ -63,6 +59,7 @@ function computeFilterValues(filters) {
     typeOffre: { ...filters.bien },
     surface: filters.surface && filters.surface !== "0" ? { value: filters.surface, unit: filters.surfaceUnit } : null,
     disponibilite: filters.disponibilite,
+    destination: filters.destination,
     transports: filters.transports,
     electriciteDistance: filters.electriciteDistance,
     puissance: filters.puissance,
@@ -79,6 +76,7 @@ export function toModalInitialValues(activeFilters = {}) {
     surface: activeFilters.surface?.value || "0",
     surfaceUnit: activeFilters.surface?.unit || "Ha",
     disponibilite: activeFilters.disponibilite || { immediate: false, m0_6: false, m6_12: false, plus12: false },
+    destination: activeFilters.destination ?? null,
     transports: activeFilters.transports || {
       autoroute: { checked: false, distance: "moins de 5 km" },
       gare: { checked: false, distance: "moins de 10 km" },
@@ -139,6 +137,8 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
         return filters.secteur ? 1 : 0
       case "disponibilite":
         return Object.values(filters.disponibilite).filter(Boolean).length
+      case "destination":
+        return filters.destination ? 1 : 0
       case "transports":
         return Object.values(filters.transports).filter((t) => t.checked).length
       case "electricite":
@@ -157,6 +157,7 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
   function getAdvancedCount() {
     return (
       getSectionCount("disponibilite") +
+      getSectionCount("destination") +
       getSectionCount("transports") +
       getSectionCount("electricite") +
       getSectionCount("label")
@@ -315,6 +316,43 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                 <div className="h-px bg-grey-200 w-full" />
 
                 <AccordionSection
+                  title="Label"
+                  open={openSections.has("label")}
+                  onToggle={() => toggleSection("label")}
+                  count={getSectionCount("label")}
+                >
+                  <div className="flex flex-col gap-4 w-full">
+                    {filters.location && (
+                      <p className="text-[13px] leading-[1.5] text-brand-blue">
+                        Label compatible avec la localisation :{" "}
+                        <span className="font-semibold">{filters.location}</span>
+                      </p>
+                    )}
+                    {LABEL_CATEGORIES.map((category) => (
+                      <div key={category.title} className="flex flex-col gap-2">
+                        <p className="font-heading text-[12px] uppercase text-grey">{category.title}</p>
+                        <div className="flex flex-col gap-3">
+                          {category.options.map((opt) => (
+                            <Checkbox
+                              key={opt.id}
+                              label={opt.label}
+                              checked={!!filters.labels[opt.id]}
+                              onChange={() =>
+                                setFilters((f) => ({
+                                  ...f,
+                                  labels: { ...f.labels, [opt.id]: !f.labels[opt.id] },
+                                }))
+                              }
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </AccordionSection>
+                <div className="h-px bg-grey-200 w-full" />
+
+                <AccordionSection
                   title="Disponibilité"
                   open={openSections.has("disponibilite")}
                   onToggle={() => toggleSection("disponibilite")}
@@ -374,6 +412,22 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                       </div>
                     </div>
                   </div>
+                </AccordionSection>
+                <div className="h-px bg-grey-200 w-full" />
+
+                <AccordionSection
+                  title="Destination"
+                  open={openSections.has("destination")}
+                  onToggle={() => toggleSection("destination")}
+                  count={getSectionCount("destination")}
+                >
+                  <Dropdown
+                    placeholder="Toutes les destinations"
+                    options={DESTINATIONS}
+                    value={filters.destination}
+                    onChange={(v) => setFilters((f) => ({ ...f, destination: v }))}
+                    allLabel="Toutes les destinations"
+                  />
                 </AccordionSection>
                 <div className="h-px bg-grey-200 w-full" />
 
@@ -448,31 +502,6 @@ function AllFiltersModal({ open, onClose, onApply, initialValues }) {
                       onChange={(v) => setFilters((f) => ({ ...f, puissance: v }))}
                       allLabel="Toutes les puissances"
                     />
-                  </div>
-                </AccordionSection>
-                <div className="h-px bg-grey-200 w-full" />
-
-                <AccordionSection
-                  title="Label"
-                  open={openSections.has("label")}
-                  onToggle={() => toggleSection("label")}
-                  count={getSectionCount("label")}
-                >
-                  <div className="flex flex-col gap-2 w-full">
-                    {LABELS.map((l) => (
-                      <LabelInfoBox
-                        key={l.id}
-                        label="Site clef en main 2023"
-                        tag={l.tag}
-                        checked={!!filters.labels[l.id]}
-                        onChange={() =>
-                          setFilters((f) => ({
-                            ...f,
-                            labels: { ...f.labels, [l.id]: !f.labels[l.id] },
-                          }))
-                        }
-                      />
-                    ))}
                   </div>
                 </AccordionSection>
               </div>

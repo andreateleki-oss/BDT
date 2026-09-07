@@ -64,7 +64,12 @@ function Home() {
         <ImplantedSection />
       </div>
 
-      <ContactFormWidget />
+      <ContactFormWidget
+        showRequestType={false}
+        allowAddingSites={false}
+        ctaLabel="Nous contacter"
+        ctaIcon={null}
+      />
       <Footer />
     </main>
   )
