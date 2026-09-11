@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
-import maplibregl from "maplibre-gl"
+import maplibregl from "../utils/maplibre"
 import "maplibre-gl/dist/maplibre-gl.css"
 import { ArrowsOutSimple, ArrowsInSimple, Plus, Minus, Globe, MapTrifold } from "@phosphor-icons/react"
 import MapPreviewPin from "./ui/MapPreviewPin"

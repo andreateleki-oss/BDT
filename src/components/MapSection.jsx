@@ -59,8 +59,8 @@ function MapSection() {
 
         <div className="flex flex-col gap-8 w-full lg:max-w-[610px]">
           <div className="flex flex-col gap-6 items-start text-brand-blue">
-            <div className="font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
-              <p className="text-title-light">Le Foncier économique</p>
+            <div className="font-accent leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
+              <p className="text-title-light">Le foncier économique</p>
               <p className="font-semibold text-brand-blue">partout en France</p>
             </div>
             <p className="text-[16px] leading-[1.5] text-brand-blue">

@@ -14,7 +14,7 @@ function SectorJourney() {
   return (
     <section id="secteur-activite" className="flex flex-col gap-8 items-start lg:flex-row lg:gap-11 px-4 lg:px-[114px] py-20 scroll-mt-24 max-w-[1400px] mx-auto">
       <div className="flex-1 flex flex-col gap-6">
-        <div className="font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
+        <div className="font-accent leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
           <p className="text-title-light">Nos</p>
           <p className="font-semibold text-brand-blue">secteurs d'activités</p>
         </div>

@@ -66,12 +66,12 @@ function ContactFormWidget({
         <div className="bg-white flex flex-col gap-10 items-start p-5 w-full">
           <div className="flex flex-col gap-8 w-full">
             <div className="flex flex-col gap-6 w-full">
-              <div className="font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
+              <div className="font-accent leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px]">
                 <p className="text-title-light">Un projet d'implantation ?</p>
                 <p className="font-semibold text-brand-blue">Nos experts vous accompagnent</p>
               </div>
               <p className="text-[16px] leading-[1.5] text-brand-blue">
-                Nos experts vous recontactent sous 48h pour une première analyse gratuite de vos besoins fonciers.
+                Nos experts vous recontactent sous 48h ouvrées pour une première analyse gratuite de vos besoins fonciers.
               </p>
             </div>
 
@@ -178,7 +178,7 @@ function ContactFormWidget({
         <div className="flex gap-2 items-center">
           <Lock size={16} className="text-brand-blue" />
           <p className="text-[15px] text-brand-blue">
-            Données protégées - Réponse sous 48h garantie
+            Données protégées - Réponse sous 48h ouvrées garantie
           </p>
         </div>
       </div>

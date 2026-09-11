@@ -29,7 +29,7 @@ function FacilitatorSection() {
     <IconFeatureGrid
       titleLight="Être le facilitateur public"
       titleBold="de vos projets"
-      description="Foncier + ets un regroupement ... Lorem ipsum sit amte, consectur adipiscing elit, sed eiusmod tempor incididunt ut alobre et dolore magna aliqua."
+      description="Foncier + est un regroupement ... Lorem ipsum sit amte, consectur adipiscing elit, sed eiusmod tempor incididunt ut alobre et dolore magna aliqua."
       items={ITEMS}
     />
   )

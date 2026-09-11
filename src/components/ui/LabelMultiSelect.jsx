@@ -6,7 +6,7 @@ export const LABEL_CATEGORIES = [
   {
     title: "Rapidité / Implémentation",
     options: [
-      { id: "site-clef-en-main", label: "Site clef en main France 2030" },
+      { id: "site-clef-en-main", label: "Site clés en main France 2030" },
       { id: "territoire-industrie", label: "Territoire d'Industrie" },
     ],
   },
@@ -14,7 +14,7 @@ export const LABEL_CATEGORIES = [
     title: "Aide & Fiscalité",
     options: [
       { id: "zone-afr", label: "Zone AFR (Aide à Finalité Régionale)" },
-      { id: "ber", label: "Bassin d'Emploie à Redynamiser (BER)" },
+      { id: "ber", label: "Bassin d'Emploi à Redynamiser (BER)" },
     ],
   },
   {

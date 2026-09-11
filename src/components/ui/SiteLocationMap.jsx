@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import maplibregl from "maplibre-gl"
+import maplibregl from "../../utils/maplibre"
 import "maplibre-gl/dist/maplibre-gl.css"
 import { ArrowsOutSimple, ArrowsInSimple, Globe, MapTrifold } from "@phosphor-icons/react"
 import { randomSiteBoundary } from "../../utils/siteBoundary"

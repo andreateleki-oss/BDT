@@ -18,7 +18,7 @@ const CONTACT_LINKS = [
 ]
 
 const PARTNER_LINKS = [
-  { label: "BPI France", external: true },
+  { label: "Bpifrance", external: true },
   { label: "Chambres Commerce", external: true },
   { label: "Régions France", external: true },
   { label: "Business France", external: true },
@@ -62,7 +62,7 @@ function Footer() {
         <div className="flex flex-col gap-9 max-w-[566px]">
           <img src={logo} alt="Foncier+" className="w-[242px] h-auto self-start shrink-0" />
           <p className="text-white text-[18px] leading-[1.5]">
-            L'institution publique dédiée au pilotage foncier et à l'accompagnement des entreprises pour une croissance territoriale durable.
+            L'association dédiée au pilotage foncier et à l'accompagnement des entreprises pour une croissance territoriale durable.
           </p>
           <Button as={Link} to="/formulaire" variant="solid" className="self-start">
             Nous contacter
@@ -71,7 +71,7 @@ function Footer() {
 
         <div className="grid grid-cols-2 gap-x-12 gap-y-10 text-white">
           <div className="flex flex-col gap-6">
-            <p className="font-heading text-[24px]">Plan du Site</p>
+            <p className="font-heading text-[24px]">Plan du site</p>
             <div className="flex flex-col gap-4 font-heading text-[14px]">
               {PLAN_DU_SITE.map((item) => (
                 <a
@@ -116,7 +116,7 @@ function Footer() {
       </div>
 
       <p className="font-heading text-[13px] text-white">
-        © 2026 GIP Foncier. Tous droits réservés.
+        © 2026 Foncier +. Tous droits réservés.
       </p>
     </footer>
   )

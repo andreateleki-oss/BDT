@@ -39,7 +39,7 @@ function Home() {
 
       <div id="a-propos" className="scroll-mt-24">
         <div className="flex flex-col px-4 lg:px-[114px] pt-20 max-w-[1400px] mx-auto">
-          <div className="relative font-heading leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px] text-brand-blue">
+          <div className="relative font-accent leading-[1.15] tracking-[-1px] text-[28px] lg:text-[40px] text-brand-blue">
             <img
               src={decorPiece}
               alt=""
@@ -57,7 +57,7 @@ function Home() {
 
       <div id="actualites" className="scroll-mt-24">
         <div className="flex flex-col px-4 lg:px-[114px] pt-20 max-w-[1400px] mx-auto">
-          <p className="font-heading font-semibold text-[28px] lg:text-[40px] text-brand-blue">
+          <p className="font-accent font-semibold text-[28px] lg:text-[40px] text-brand-blue">
             Actualités
           </p>
         </div>

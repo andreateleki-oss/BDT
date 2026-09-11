@@ -16,14 +16,14 @@ const ITEMS = [
 function ServicesSection() {
   return (
     <section id="services" className="flex flex-col gap-8 px-4 lg:px-[114px] pt-10 pb-10 scroll-mt-24 max-w-[1400px] mx-auto">
-      <p className="font-heading font-semibold text-[22px] lg:text-[26px] leading-[1.2] tracking-[-0.3px] text-brand-blue">
+      <p className="font-accent font-semibold text-[22px] lg:text-[26px] leading-[1.2] tracking-[-0.3px] text-brand-blue">
         Nos Services
       </p>
 
       <div className="flex flex-col gap-8 items-start lg:flex-row lg:gap-11 w-full">
         <p className="w-full lg:w-[479px] shrink-0 text-[16px] leading-[1.5] text-brand-blue">
-          Chaque projet a ses propres contraintes, ses propres échéances.
-          Chaque projet a ses propres contraintes, ses propres échéances.
+          Lorem Ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+          incididunt ut labore et dolore magna aliqua.
         </p>
 
         <div className="flex-1 flex flex-col">
